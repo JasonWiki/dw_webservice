@@ -13,9 +13,123 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.4</version>
       <scope>test</scope>
     </dependency>
+
+
+
+    <!-- AOP AspectJ -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>1.8.0</version>
+    </dependency>
+    
+    
+    <!-- spring -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>4.0.4.RELEASE</version>
+    </dependency>
+
+    <!-- spring-web -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>4.0.4.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aspects</artifactId>
+      <version>4.0.4.RELEASE</version>
+    </dependency>
+ 
+
+    <!-- struts2 -->
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-core</artifactId>
+      <version>2.3.16.3</version>
+      <!-- 这里排除掉队javassist的依赖，通过hibernate包引入 -->
+      <exclusions>
+        <exclusion> 
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    
+    <!-- 
+    <dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.1.0</version>
+    </dependency>
+    -->
+
+    <!--  struts2 与 spring 整合插件
+     把 Action 交给 Spring 容器来管理, 调用 Spring 容器中的 Action,
+     struts2 不再负责创建 Action 实例, 直接通过 Spring 容器获取 Action 对象
+     -->
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-spring-plugin</artifactId>
+      <version>2.3.16.3</version>
+    </dependency>
+    
+    <!-- struts 注解插件 -->
+    <dependency> 
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-convention-plugin</artifactId>
+      <version>2.3.16.3</version>
+    </dependency>
+ 
+ 
+    <!-- hibernate-core -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>4.3.5.Final</version>
+    </dependency>
+
+    <!-- hibernate 注解工具 -->
+    <dependency>
+      <groupId>org.hibernate.common</groupId>
+      <artifactId>hibernate-commons-annotations</artifactId>
+      <version>4.0.4.Final</version>
+    </dependency>
+
+    <!-- JPA 规范 -->
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.1-api</artifactId>
+      <version>1.0.0.Final</version>
+    </dependency>
+
+    <!-- 持久化管理器 entitymanager -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>4.3.5.Final</version>
+    </dependency>
+
+    <!-- hibernate 缓存管理 -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-ehcache</artifactId>
+      <version>4.3.5.Final</version>
+    </dependency>
+
+    <!-- mysql 驱动 -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.30</version>
+    </dependency> 
+
   </dependencies>
 
 
