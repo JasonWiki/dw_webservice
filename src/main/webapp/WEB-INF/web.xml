@@ -5,13 +5,10 @@
     http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
     version="3.1" metadata-complete="true">
 
+    <!-- 项目名称 -->
     <display-name>dw_webservice</display-name>
 
-    
-    <context-param>
-        <param-name>webAppRootKey</param-name>
-        <param-value>DwMonitor.root</param-value>
-    </context-param>
+    <!-- 设置配置文件目录 -->
     <context-param>
         <param-name>log4jConfigLocation</param-name>
         <param-value>WEB-INF/classes/log4j/log4j.properties</param-value>
@@ -24,7 +21,6 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring/applicationContext.xml</param-value>
     </context-param>
-    
 
     <!-- 设置编码 -->
     <filter>
@@ -36,7 +32,6 @@
         </init-param>
     </filter>
 
-
     <!-- 
     配置spring前端监听器，当服务器启动的时候初始化xml配置,
     Spring Listener, 使用 ContextLoaderListener 初始化 Spring 容器
@@ -44,6 +39,8 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
+
     <!-- Character Encoding Filter -->
     <filter>
         <filter-name>Set Character Encoding</filter-name>
@@ -77,6 +74,7 @@
             <param-value>com.angejia.dw.web_service.modules</param-value>
         </init-param>
     </filter>
+    <!-- struts2 拦截所有请求 -->
     <filter-mapping>
         <filter-name>struts2</filter-name>
         <url-pattern>/*</url-pattern>
