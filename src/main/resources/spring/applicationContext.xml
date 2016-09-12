@@ -11,10 +11,23 @@
     <!-- 定义一个业务逻辑组件，实现类为 MyServiceImp，
         此处的 id 必须与 Action 的 setter 方法名对应 -->
     <!-- bean id="ms" class="org.crazyit.app.service.impl.MyServiceImpl"/  -->
-    
-    <!-- 使用 annotation --> 
+
+    <!-- 使用 annotation 注解 --> 
     <context:annotation-config />
-    
-    <!-- 使用 annotation 自动注册b ean,并检查@Controller, @Service, @Repository 注解已被注入 --> 
+
+    <!-- 使用 annotation 自动注册 bean,并检查 @Controller, @Service, @Repository 注解已被注入 --> 
     <context:component-scan base-package="com.angejia.dw.web_service.modules" />
+
+    <!-- spring 配置数据源文件 -->
+    <context:property-placeholder location="classpath:hibernate/hibernate.properties"/>
+
+    <!-- Hibernate 配置管理, 与 applicationContext.xml 同级目录 -->
+    <import resource="applicationContext-persistence.xml" />
+
+    <!-- 项目公共配置文件 -->
+    <bean id="commonProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:spring/common.properties" />
+    </bean>
+
+
 </beans>
