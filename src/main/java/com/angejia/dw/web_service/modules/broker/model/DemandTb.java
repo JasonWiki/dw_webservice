@@ -1,5 +1,8 @@
 package com.angejia.dw.web_service.modules.broker.model;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import javax.persistence.Column;
 // 注解将一个类声明为一个实体bean(即一个持久化POJO类)
 import javax.persistence.Entity;
@@ -11,15 +14,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "demand")
-public class demand implements java.io.Serializable{
+public class DemandTb implements java.io.Serializable{
 
     private static final long serialVersionUID = 1L;
 
+    // 需求单状态
+    public static final byte DEMAND_STATUS = 1;
+
     private Integer id;
-    private Integer customerId;
-    private Integer brokerId;
+    private Long customerId;
+    private Long brokerId;
     // status = 1 , 表示有效的
-    private Integer status;
+    private byte status;
     private Integer cityId;
     // 区域列表
     private String districtIds;
@@ -30,7 +36,7 @@ public class demand implements java.io.Serializable{
     // 价格区间 id
     private Integer priceId;
     // 预算 万为单位
-    private Integer budget;
+    private BigDecimal budget;
     // 户型列表
     private String bedrooms;
 
@@ -44,31 +50,31 @@ public class demand implements java.io.Serializable{
         this.id = id;
     }
 
-    @Column(name = "buyer_uid", length = 20)
-    public Integer getCustomerId() {
+    @Column(name = "buyer_uid")
+    public Long getCustomerId() {
         return customerId;
     }
-    public void setCustomerId(Integer customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 
-    @Column(name = "broker_uid", length = 20)
-    public Integer getBrokerId() {
+    @Column(name = "broker_uid")
+    public Long getBrokerId() {
         return brokerId;
     }
-    public void setBrokerId(Integer brokerId) {
+    public void setBrokerId(Long brokerId) {
         this.brokerId = brokerId;
     }
 
-    @Column(length = 4)
-    public Integer getStatus() {
+    @Column(length = 1)
+    public byte getStatus() {
         return status;
     }
-    public void setStatus(Integer status) {
+    public void setStatus(byte status) {
         this.status = status;
     }
 
-    @Column(length = 9)
+    @Column(name = "city_id", length = 9)
     public Integer getCityId() {
         return cityId;
     }
@@ -76,7 +82,7 @@ public class demand implements java.io.Serializable{
         this.cityId = cityId;
     }
 
-    @Column(name = "district_id", length = 255)
+    @Column(name = "district_id")
     public String getDistrictIds() {
         return districtIds;
     }
@@ -84,7 +90,7 @@ public class demand implements java.io.Serializable{
         this.districtIds = districtIds;
     }
 
-    @Column(name = "block_id", length = 255)
+    @Column(name = "block_id")
     public String getBlockIds() {
         return blockIds;
     }
@@ -92,7 +98,7 @@ public class demand implements java.io.Serializable{
         this.blockIds = blockIds;
     }
 
-    @Column(length = 255)
+    @Column(name = "community_ids", length = 9)
     public String getCommunityIds() {
         return communityIds;
     }
@@ -100,7 +106,7 @@ public class demand implements java.io.Serializable{
         this.communityIds = communityIds;
     }
 
-    @Column(length = 11)
+    @Column(name = "price_id", length = 11)
     public Integer getPriceId() {
         return priceId;
     }
@@ -108,10 +114,10 @@ public class demand implements java.io.Serializable{
         this.priceId = priceId;
     }
 
-    public Integer getBudget() {
+    public BigDecimal getBudget() {
         return budget;
     }
-    public void setBudget(Integer budget) {
+    public void setBudget(BigDecimal budget) {
         this.budget = budget;
     }
 

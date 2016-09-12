@@ -21,7 +21,7 @@
     -->
 
     <!-- productDbSource 数据源 -->
-    <bean id="productDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${hibernate.connection.product.driver_class}"/> 
         <property name="jdbcUrl" value="${hibernate.connection.product.url}"/>
         <property name="properties"> 
@@ -36,14 +36,16 @@
     </bean>
 
 
-    <!-- productDbSessionFactory : 配置 hibernate 整合  -->
-    <bean id="productDataSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="productDataSource" />
-
+    <!-- sessionFactory : 注入 productDataSource   -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        
         <property name="hibernateProperties">
             <props>
                 <!-- 创建 session 方式 hibernate4.x 的方式 -->
                 <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+            
+                <prop key="current_session_context_class" >thread</prop>
             
                 <!-- 设置数据库方言 -->
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -64,6 +66,7 @@
                 <prop key="hibernate.connection.autocommit">true</prop>
                 <!-- 指定 hibernate 在何时释放JDBC连接 -->
                 <prop key="hibernate.connection.release_mode">auto</prop>
+                
 
             </props>
         </property>
@@ -74,17 +77,38 @@
 
     <!-- productData 配置事务管理 -->
     <bean id="productDataTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="productDataSessionFactory" />
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     <!-- 配置注解实现管理事务（cglib：proxy-target-class="true"） -->
     <tx:annotation-driven transaction-manager="productDataTransactionManager" proxy-target-class="true" />
 
+    <!-- 使用annotation声明 -->
+    <tx:annotation-driven />
+    <tx:advice id="txAdvice" transaction-manager="productDataTransactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="*" propagation="REQUIRED" />
+        </tx:attributes>
+    </tx:advice>
+
+
 
     <!-- productJdbcTemplate -->
     <bean id="productJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
-        <property name="dataSource" ref="productDataSource"/>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
+
+    <!-- 把连接工厂, 注入到 DemandDaoImpl  -->
+    <bean id="demandDaoA" class="com.angejia.dw.web_service.modules.broker.dao.impl.DemandDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+
+ 
 
 
 </beans>

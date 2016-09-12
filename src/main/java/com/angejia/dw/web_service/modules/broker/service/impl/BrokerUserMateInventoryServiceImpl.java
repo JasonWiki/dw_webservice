@@ -15,8 +15,8 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
     private DemandDao demandDao;
 
     public String getBrokerUserMateInventory(String brokerId, String userId) {
-        
-        return demandDao.getMemberDemandByUserId(userId);
+
+        return demandDao.getDemandByBrokerIdAndUserId(brokerId, userId);
     }
 
 
