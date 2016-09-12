@@ -8,7 +8,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.ResultPath;
 
-import com.angejia.dw.web_service.modules.broker.service.MyService;
 
 //import com.angejia.dw.web_service.modules.broker.controller.LoginAction;
 
@@ -24,7 +23,15 @@ Spring中除了提供 @Component 注释外，还定义了几个拥有特殊语�
      @Controller用于标注控制层组件（如struts中的action）,
      @Repository用于标注数据访问组件，即DAO组件，
      @Component泛指组件，当组件不好归类的时候，我们可以使用这个注解进行标注。
-     
+// spring 注解
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
+
+import import org.springframework.transaction.annotation.Transactional; // 事物注解
+
 @ResultPath
  */
 
@@ -33,11 +40,6 @@ public class LoginAction extends ActionSupport {
     private String username;
     private String password;    
 
-    private MyService ms;
-    public void setMs(MyService ms)
-    {
-        this.ms = ms;
-    }
     
     public String getUsername()
     {
@@ -58,15 +60,7 @@ public class LoginAction extends ActionSupport {
 
     public String execute() throws Exception
     {
-        if (ms.validLogin(getUsername(), getPassword()) > 0)
-        {
-            addActionMessage("123");
             return SUCCESS;
-        }
-        else
-        {
-            return ERROR;
-        }
     } 
     
      

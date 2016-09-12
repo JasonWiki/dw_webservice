@@ -72,7 +72,6 @@
         <property name="packagesToScan" value="com.angejia.dw.web_service.modules.*.model"/>
     </bean>
 
-
     <!-- productData 配置事务管理 -->
     <bean id="productDataTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="productDataSessionFactory" />
