@@ -1,13 +1,14 @@
-package com.angejia.dw.web_service.core.base.impl;
+package com.angejia.dw.web_service.core.base.dao.impl;
 
 import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.*;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-import org.springframework.orm.hibernate4.HibernateCallback;
 
-import com.angejia.dw.web_service.core.base.BaseDao;
+import com.angejia.dw.web_service.core.base.dao.BaseDao;
+
+import org.springframework.orm.hibernate4.HibernateCallback;
 
 public class BaseDaoHibernate3<T> extends HibernateDaoSupport implements BaseDao<T>
 {

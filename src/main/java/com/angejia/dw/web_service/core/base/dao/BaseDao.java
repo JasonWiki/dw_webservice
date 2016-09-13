@@ -1,4 +1,4 @@
-package com.angejia.dw.web_service.core.base;
+package com.angejia.dw.web_service.core.base.dao;
 
 import java.util.List;
 import java.io.Serializable;

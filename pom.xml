@@ -11,13 +11,13 @@
 
   <dependencies>
   
-  
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.4</version>
       <scope>test</scope>
     </dependency>
+
 
     <!-- apache log4j -->
     <dependency>
@@ -26,7 +26,6 @@
       <version>1.2.17</version>
     </dependency>
 
-
     <!-- AOP AspectJ -->
     <dependency>
       <groupId>org.aspectj</groupId>
@@ -34,7 +33,7 @@
       <version>1.8.0</version>
     </dependency>
 
-    <!-- spring -->
+    <!-- spring-core -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
@@ -62,6 +61,7 @@
       <version>4.0.4.RELEASE</version>
     </dependency>
 
+    <!-- spring-aspects -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aspects</artifactId>
@@ -82,14 +82,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
-    <!-- 
-    <dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>javax.servlet-api</artifactId>
-    <version>3.1.0</version>
-    </dependency>
-    -->
 
     <!--  struts2 与 spring 整合插件
      把 Action 交给 Spring 容器来管理, 调用 Spring 容器中的 Action,
@@ -116,6 +108,30 @@
     </dependency>
  
  
+ 
+ 
+    <!-- hadoop-common -->
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-common</artifactId>
+      <version>2.6.0</version>
+    </dependency>
+
+    <!-- hadoop-hdfs -->
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-hdfs</artifactId>
+      <version>2.6.0</version>
+    </dependency>
+
+    <!-- hadoop-client -->
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client</artifactId>
+      <version>2.6.0</version>
+    </dependency>
+
+
     <!-- hibernate-core -->
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -151,18 +167,42 @@
       <version>4.3.5.Final</version>
     </dependency>
 
+
     <!-- mysql 驱动 -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.30</version>
     </dependency> 
-    
+
     <!-- C3P0 是一个开源的 JDBC 连接池，它实现了数据源和 JNDI 绑定，支持 JDBC3 规范和 JDBC2 的标准扩展。 -->
     <dependency>
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
       <version>0.9.5.2</version>
+    </dependency>
+
+
+
+    <!-- hbase-common -->
+    <dependency>
+      <groupId>org.apache.hbase</groupId>
+      <artifactId>hbase-common</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
+    <!-- hbase-client -->
+    <dependency>
+      <groupId>org.apache.hbase</groupId>
+      <artifactId>hbase-client</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
+    <!-- hbase-server -->
+    <dependency>
+      <groupId>org.apache.hbase</groupId>
+      <artifactId>hbase-server</artifactId>
+      <version>1.0.0</version>
     </dependency>
 
   </dependencies>

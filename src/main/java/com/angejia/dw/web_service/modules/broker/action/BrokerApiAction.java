@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 // spring 注解
 import org.springframework.stereotype.Controller;
 
-import com.angejia.dw.web_service.core.base.BaseAction;
+import com.angejia.dw.web_service.core.base.action.BaseAction;
 import com.angejia.dw.web_service.modules.broker.service.BrokerUserMateInventoryService;
 
 @Controller("brokerApiAction")
@@ -39,7 +39,6 @@ public class BrokerApiAction extends BaseAction {
     private static final int pageSize = Integer.MAX_VALUE;
 
     @Autowired
-    //@Resource(name="brokerUserMateInventoryService")
     private BrokerUserMateInventoryService brokerUserMateInventoryService;
 
     private String userId;
@@ -57,12 +56,12 @@ public class BrokerApiAction extends BaseAction {
     @Action("broker-user-mate-inventory")
     public String brokerUserMateInventory() {
 
-        String userId = this.getUserId();
         String brokerId = this.getBrokerId();
-        System.out.println(userId);
-        System.out.println(brokerId);
+        String userId = this.getUserId();
 
-        brokerUserMateInventoryService.getBrokerUserMateInventory(brokerId, userId);
+        System.out.println(brokerId + "," + userId);
+
+        brokerUserMateInventoryService.getBrokerUserMateInventory(Long.valueOf(brokerId), Long.valueOf(userId));
 
         result.put("userId", this.getUserId());
         result.put("brokerId", this.getBrokerId());

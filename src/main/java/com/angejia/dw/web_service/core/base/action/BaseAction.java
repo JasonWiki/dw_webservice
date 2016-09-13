@@ -1,4 +1,4 @@
-package com.angejia.dw.web_service.core.base;
+package com.angejia.dw.web_service.core.base.action;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;

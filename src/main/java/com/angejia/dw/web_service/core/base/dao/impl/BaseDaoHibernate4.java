@@ -1,18 +1,17 @@
-package com.angejia.dw.web_service.core.base.impl;
+package com.angejia.dw.web_service.core.base.dao.impl;
 
 import java.util.List;
 import java.io.Serializable;
 
 import org.hibernate.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.angejia.dw.web_service.core.base.BaseDao;
+import com.angejia.dw.web_service.core.base.dao.BaseDao;
 
 public class BaseDaoHibernate4<T> implements BaseDao<T> {
+
     // DAO 组件进行持久化操作底层依赖的 SessionFactory 组件
     public SessionFactory sessionFactory;
     // 依赖注入 SessionFactory 所需的 setter 方法
-    @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -28,22 +27,30 @@ public class BaseDaoHibernate4<T> implements BaseDao<T> {
         return (T)getSessionFactory().getCurrentSession()
             .get(entityClazz , id);
     }
+
+
     // 保存实体
     public Serializable save(T entity)
     {
         return getSessionFactory().getCurrentSession()
             .save(entity);
     }
+
+
     // 更新实体
     public void update(T entity)
     {
         getSessionFactory().getCurrentSession().saveOrUpdate(entity);
     }
+
+
     // 删除实体
     public void delete(T entity)
     {
         getSessionFactory().getCurrentSession().delete(entity);
     }
+
+
     // 根据ID删除实体
     public void delete(Class<T> entityClazz , Serializable id)
     {
@@ -53,14 +60,17 @@ public class BaseDaoHibernate4<T> implements BaseDao<T> {
             .setParameter("0" , id)
             .executeUpdate();
     }
+
+
     // 获取所有实体
     public List<T> findAll(Class<T> entityClazz)
     {
         return find("SELECT en FROM "
             + entityClazz.getSimpleName() + " en");
     }
+
+
     // 获取实体总数
-    
     public long findCount(Class<T> entityClazz)
     {
         List<?> l = find("SELECT COUNT(*) FROM "
@@ -73,6 +83,7 @@ public class BaseDaoHibernate4<T> implements BaseDao<T> {
         return 0;
     }
 
+
     // 根据HQL语句查询实体
     @SuppressWarnings("unchecked")
     protected List<T> find(String hql)
@@ -81,6 +92,8 @@ public class BaseDaoHibernate4<T> implements BaseDao<T> {
             .createQuery(hql)
             .list();
     }
+
+
     // 根据带占位符参数HQL语句查询实体
     @SuppressWarnings("unchecked")
     protected List<T> find(String hql , Object... params)
@@ -95,6 +108,8 @@ public class BaseDaoHibernate4<T> implements BaseDao<T> {
         }
         return (List<T>)query.list();
     }
+
+
     /**
      * 使用hql 语句进行分页查询操作
      * @param hql 需要查询的hql语句
@@ -114,6 +129,8 @@ public class BaseDaoHibernate4<T> implements BaseDao<T> {
             .setMaxResults(pageSize)
             .list();
     }
+
+
     /**
      * 使用hql 语句进行分页查询操作
      * @param hql 需要查询的hql语句

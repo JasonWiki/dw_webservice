@@ -1,7 +1,6 @@
 package com.angejia.dw.web_service.modules.broker.model;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 import javax.persistence.Column;
 // 注解将一个类声明为一个实体bean(即一个持久化POJO类)
@@ -18,7 +17,7 @@ public class DemandTb implements java.io.Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    // 需求单状态
+    // 有效需求单状态
     public static final byte DEMAND_STATUS = 1;
 
     private Integer id;
