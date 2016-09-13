@@ -45,10 +45,10 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
      * @param userId
      */
     public void getUserPortrait(Long userId) {
-        userPortraitService.getUserPortraitByRowkey(userId.toString());
+        userPortraitService.getUserNeedsSort(userId.toString(), "1");
     }
     
-
+ 
     /**
      * 获取客户需求
      * @param brokerId

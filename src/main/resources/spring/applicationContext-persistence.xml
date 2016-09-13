@@ -89,19 +89,12 @@
     </tx:advice>
 
 
-
     <!-- 业务配置 Start  -->
 
     <!-- productDataSource 数据源注入 spring JDBC 模板 -->
     <bean id="productJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
         <property name="dataSource" ref="productDataSource"/>
     </bean>
-
-    <!-- productDataSessionFactory 注入到 DemandDaoImpl 中, 提供 ORM 
-    <bean id="demandDao" class="com.angejia.dw.web_service.modules.broker.dao.impl.DemandDaoImpl">
-        <property name="sessionFactory" ref="productDataSessionFactory" />
-    </bean>
-    -->
 
     <!-- productDataSessionFactory 注入到 productDataSourceDao -->
     <bean id="productDataSourceDao" class="com.angejia.dw.web_service.core.base.dao.DataSourceSessionFactory">

@@ -17,4 +17,6 @@ public class DataSourceSessionFactory {
     public SessionFactory getProductDataSessionFactory() {
         return this.productDataSessionFactory;
     }
+
+    
 }
