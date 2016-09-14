@@ -43,7 +43,9 @@ public class BrokerApiAction extends BaseAction {
 
     private String userId;
     private String brokerId;
-    private Integer page;
+    private String cityId;
+    private Integer offset;
+
     private Map<String, Object> result = new HashMap<String, Object>();
 
     // 测试
@@ -56,12 +58,13 @@ public class BrokerApiAction extends BaseAction {
     @Action("broker-user-mate-inventory")
     public String brokerUserMateInventory() {
 
-        String brokerId = this.getBrokerId();
-        String userId = this.getUserId();
+        Long brokerId = Long.valueOf(this.getBrokerId());
+        Long userId = Long.valueOf(this.getUserId());
+        Long cityId = Long.valueOf(this.getCityId());
 
         System.out.println(brokerId + "," + userId);
 
-        brokerUserMateInventoryService.getBrokerUserMateInventory(Long.valueOf(brokerId), Long.valueOf(userId));
+        brokerUserMateInventoryService.getBrokerUserMateInventory(brokerId, userId, cityId);
 
         result.put("userId", this.getUserId());
         result.put("brokerId", this.getBrokerId());
@@ -93,6 +96,21 @@ public class BrokerApiAction extends BaseAction {
     }
     public void setBrokerId(String brokerId) {
         this.brokerId = brokerId;
+    }
+
+    public String getCityId() {
+        return cityId;
+    }
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
+    }
+
+    public Integer getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
     }
 
     /**

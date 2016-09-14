@@ -37,10 +37,10 @@ public class UserPortraitDaoImpl extends HBaseUtil implements UserPortraitDao  {
 
 
     // 获取 Needs 列组下的所有标签
-    public Map<String, String> getUserPortraitNeedsByRowkey(String Rowkey) {
+    public Map<String, String> getUserPortraitNeedsByRowkey(String Rowkey, List<String> columnNames) {
 
         this.init();
 
-        return super.select("userPortrait", Rowkey, "needs", Arrays.asList("actionNeeds"));
+        return super.select("userPortrait", Rowkey, "needs", columnNames);
     }
 }
