@@ -3,10 +3,8 @@ package com.angejia.dw.web_service.modules.user.service.Impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,8 +88,14 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
         return result;
     }
 
-    private void swtich(String curTag) {
-        // TODO Auto-generated method stub
-        
+    public void getUserPortrait(String rowkey, String cityId) {
+        // 获取需求标签组
+        Map<String, String> needs = userPortraitDao.getUserPortraitNeedsByRowkey(rowkey);
+
+        // 获取标签分数组
+        List<String> columnNames =  Arrays.asList("city", "district", "block", "community", "bedrooms", "price");
+        Map<String, String> tagsScore = userPortraitDao.getUserPortraitTagsByRowkey(rowkey, columnNames);
+
+        // 
     }
 }
