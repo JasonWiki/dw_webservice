@@ -162,6 +162,7 @@ public class HBaseUtil {
             result = table.get(get);
             table.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return result;

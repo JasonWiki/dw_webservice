@@ -110,9 +110,10 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
         }
 
+        /*
         // 客户画像
         List<Map<String, String>> userPortrait = userPortraitService.getUserPortraitResult(userId.toString(), cityId.toString());
-        
+
         for (int i =0; i <= userPortrait.size()-1; i ++) {
             
             if (i >= 5) break;
@@ -156,9 +157,8 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
             result.addAll(inventoryService.searchInventoryByEntity(userPortraitSearch, 0, 20));
         }
         
-        
-        //System.out.println(userPortrait);
-        
+        System.out.println(userPortrait);
+        */
         return result;
     }
 
