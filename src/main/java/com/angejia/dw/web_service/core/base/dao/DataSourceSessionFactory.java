@@ -23,10 +23,11 @@ public class DataSourceSessionFactory {
      * 保存 spring 注入的 dwDataSessionFactory 工厂
      */
     public SessionFactory dwDataSessionFactory;
+    public SessionFactory getDwDataSessionFactory() {
+        return dwDataSessionFactory;
+    }
     public void setDwDataSessionFactory(SessionFactory dwDataSessionFactory) {
         this.dwDataSessionFactory = dwDataSessionFactory;
     }
-    public SessionFactory getDwDataSessionFactory() {
-        return this.dwDataSessionFactory;
-    }
+   
 }

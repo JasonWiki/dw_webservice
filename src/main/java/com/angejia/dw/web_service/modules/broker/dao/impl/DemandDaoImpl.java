@@ -51,9 +51,13 @@ public class DemandDaoImpl extends BaseDaoHibernate4<DemandEntity> implements De
 
 
     /**
-     * 获取需求
+     * 获取客户需求
+     * @param brokerId  经纪人 ID
+     * @param userId    用户 ID
+     * @param cityId    城市 ID
+     * @return DemandEntity
      */
-    public DemandEntity getDemandByBrokerIdAndUserId(Long brokerId, Long userId) {
+    public DemandEntity getDemandByBrokerIdAndUserId(Long brokerId, Long userId, Long cityId) {
         super.setSessionFactory(dataSourceDao.getProductDataSessionFactory());
 
         // 创建一个查询对象
@@ -62,7 +66,9 @@ public class DemandDaoImpl extends BaseDaoHibernate4<DemandEntity> implements De
                 // 筛选条件
                 .add(Restrictions.eq("status", DemandEntity.DEMAND_STATUS))
                 .add(Restrictions.eq("brokerId", brokerId))
-                .add(Restrictions.eq("customerId", userId));
+                .add(Restrictions.eq("customerId", userId))
+                .add(Restrictions.eq("cityId", Integer.parseInt(cityId.toString())))
+                ;
 
         // 返回一条数据
         DemandEntity result = (DemandEntity) criteria.uniqueResult();

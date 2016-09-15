@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 // spring 注解
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.angejia.dw.web_service.core.utils.string.StringUtil;
 
 // service
 import com.angejia.dw.web_service.modules.broker.service.BrokerUserMateInventoryService;
@@ -38,23 +39,37 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
     private BrokerCustomerBindUserDao brokerCustomerBindUserDao;
 
 
+    /**
+     * 顾问推荐房源
+     */
     public List<Map<String, String>> getBrokerUserMateInventory(Long brokerId, Long userId, Long cityId) {
         // 最终推荐房源数据
         List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 
-        DemandEntity demand = this.getDemand(brokerId, userId);
-        System.out.println(demand.getId() + ": " + demand.getCityId() + "," + demand.getDistrictIds() + "," + demand.getBlockIds() + "," + demand.getCommunityIds() + "," + demand.getStatus());
+        // 客户需求
+        DemandEntity demand = this.getDemand(brokerId, userId, cityId);
 
         if (demand != null) {
+            System.out.println("客户需求:" + demand.getId() + ": " + demand.getCityId() + "," + demand.getDistrictIds() + "," + demand.getBlockIds() + "," + demand.getCommunityIds() + "," + demand.getStatus());
+
             // 小区搜索
             ProertyInventoryIndexEntity demandSearch = new ProertyInventoryIndexEntity();
             demandSearch.setCityId(1);
-            demandSearch.setDistrictId(12);
-            demandSearch.setBlockId(120);
-            demandSearch.setCommunityId(11998);
-            demandSearch.setBedrooms((byte) 2);
-            demandSearch.setPrice(4000000);
-            inventoryService.searchInventoryByEntity(demandSearch, 0, 10);
+
+            // 批量查询
+            Integer[] districtIds = StringUtil.strArrToIntArr("12;12".split(";"));
+            Integer[] blockIds = StringUtil.strArrToIntArr("120;120".split(";"));
+            Integer[] communityIds = StringUtil.strArrToIntArr("11998;11998".split(";"));
+            Byte[] bedroomsIds = StringUtil.strArrToByteArr("2;3".split(";"));
+            Byte[] priceTierIds = StringUtil.strArrToByteArr("5;7".split(";"));
+
+            demandSearch.setDistrictIds(districtIds);
+            demandSearch.setBlockIds(blockIds);
+            demandSearch.setCommunityIds(communityIds);
+            demandSearch.setBedroomsIds(bedroomsIds);
+            demandSearch.setPriceTierIds(priceTierIds);
+
+            result = inventoryService.searchInventoryByEntity(demandSearch, 0, 10);
 
         }
         
@@ -68,9 +83,10 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
      * 获取客户需求
      * @param brokerId
      * @param userId
-     * @return
+     * @param cityId
+     * @return DemandEntity
      */
-    public DemandEntity getDemand(Long brokerId, Long userId) {
+    public DemandEntity getDemand(Long brokerId, Long userId, Long cityId) {
         DemandEntity demand = new DemandEntity();
 
         // 通过 userId 获取 客户 ID
@@ -80,7 +96,11 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
             Integer customerId = brokerCustomerBindUser.getBrokerCustomerId();
 
             // 通过 brokerId 和 客户 Id 获取顾问对客户的需求秒数
-            demand =  demandDao.getDemandByBrokerIdAndUserId(brokerId, Long.valueOf(customerId.toString()));
+            demand =  demandDao.getDemandByBrokerIdAndUserId(
+                    brokerId, 
+                    Long.valueOf(customerId.toString()),
+                    cityId
+            );
         }
 
         return demand;

@@ -1,6 +1,7 @@
 package com.angejia.dw.web_service.modules.broker.action;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -63,13 +64,27 @@ public class BrokerApiAction extends BaseAction {
 
         System.out.println(brokerId + "," + userId);
 
-        brokerUserMateInventoryService.getBrokerUserMateInventory(brokerId, userId, cityId);
+        // 顾问配盘数据
+        List<Map<String, String>> brokerUserMateInventorys = brokerUserMateInventoryService.getBrokerUserMateInventory(brokerId, userId, cityId);
 
-        result.put("userId", this.getUserId());
-        result.put("brokerId", this.getBrokerId());
-        result.put("historySqls", "show tables;");
+        
+        // 外层基本信息
+        Map<String, Object> baseResult = new HashMap<String, Object>();
+        baseResult.put("brokerId", this.getBrokerId());
+        baseResult.put("userId", this.getUserId());
+        baseResult.put("cityId", this.getCityId());
+        baseResult.put("total", Integer.toString(brokerUserMateInventorys.size()));
+        
+        // 推荐实体数据
+        Map<String, Object> dataResult = new HashMap<String, Object>();
+        dataResult.put("list", brokerUserMateInventorys);
+        
+        // 组装
+        baseResult.put("rec", dataResult);
 
-        return this.output("ok", "123"); 
+        result.put("brokerMateInventoryInfo",baseResult);
+
+        return SUCCESS;
     }
 
 

@@ -11,5 +11,5 @@ import com.angejia.dw.web_service.modules.entity.product.angejia.DemandEntity;
 
 public interface DemandDao extends BaseDao<DemandEntity>{
 
-    public DemandEntity getDemandByBrokerIdAndUserId(Long brokerId, Long userId);
+    public DemandEntity getDemandByBrokerIdAndUserId(Long brokerId, Long userId, Long cityId);
 }
