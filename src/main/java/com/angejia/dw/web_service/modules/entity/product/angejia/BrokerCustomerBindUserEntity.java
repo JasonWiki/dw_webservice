@@ -1,6 +1,5 @@
-package com.angejia.dw.web_service.modules.broker.model;
+package com.angejia.dw.web_service.modules.entity.product.angejia;
 
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 // 注解将一个类声明为一个实体bean(即一个持久化POJO类)
@@ -18,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "broker_customer_bind_user")
-public class BrokerCustomerBindUser implements java.io.Serializable{
+public class BrokerCustomerBindUserEntity implements java.io.Serializable{
     private static final long serialVersionUID = 1L;
 
     // 有效

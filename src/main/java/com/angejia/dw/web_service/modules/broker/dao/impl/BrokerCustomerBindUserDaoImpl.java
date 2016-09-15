@@ -13,12 +13,12 @@ import org.hibernate.criterion.Restrictions;
 import com.angejia.dw.web_service.core.base.dao.DataSourceSessionFactory;
 import com.angejia.dw.web_service.core.base.dao.impl.BaseDaoHibernate4;
 import com.angejia.dw.web_service.modules.broker.dao.BrokerCustomerBindUserDao;
-import com.angejia.dw.web_service.modules.broker.model.BrokerCustomerBindUser;
+import com.angejia.dw.web_service.modules.entity.product.angejia.BrokerCustomerBindUserEntity;
 
 @Repository("brokerCustomerBindUserDao")
 // spring 整理注入, 必须开启事物
 @Transactional("productDataTransactionManager")
-public class BrokerCustomerBindUserDaoImpl extends BaseDaoHibernate4<BrokerCustomerBindUser> implements BrokerCustomerBindUserDao {
+public class BrokerCustomerBindUserDaoImpl extends BaseDaoHibernate4<BrokerCustomerBindUserEntity> implements BrokerCustomerBindUserDao {
 
     private static final Logger logger = Logger.getLogger(BrokerCustomerBindUserDaoImpl.class);
     /**
@@ -34,18 +34,18 @@ public class BrokerCustomerBindUserDaoImpl extends BaseDaoHibernate4<BrokerCusto
      * @param userId
      * @return
      */
-    public BrokerCustomerBindUser getCustomerIdByUserId(Integer userId) {
+    public BrokerCustomerBindUserEntity getCustomerIdByUserId(Integer userId) {
         super.setSessionFactory(dataSourceDao.getProductDataSessionFactory());
 
         // 创建一个查询对象
         Criteria criteria = super.getSessionFactory().getCurrentSession()
-                .createCriteria(BrokerCustomerBindUser.class)
+                .createCriteria(BrokerCustomerBindUserEntity.class)
                 // 筛选条件
-                .add(Restrictions.eq("isActive", BrokerCustomerBindUser.IS_ACTIVE))
+                .add(Restrictions.eq("isActive", BrokerCustomerBindUserEntity.IS_ACTIVE))
                 .add(Restrictions.eq("userId", userId));
 
         // 获取一条记录
-        BrokerCustomerBindUser result = (BrokerCustomerBindUser) criteria.uniqueResult();
+        BrokerCustomerBindUserEntity result = (BrokerCustomerBindUserEntity) criteria.uniqueResult();
 
         return result;
 

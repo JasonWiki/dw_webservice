@@ -1,4 +1,4 @@
-package com.angejia.dw.web_service.modules.broker.model;
+package com.angejia.dw.web_service.modules.entity.product.angejia;
 
 import java.math.BigDecimal;
 
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "demand")
-public class DemandTb implements java.io.Serializable{
+public class DemandEntity implements java.io.Serializable{
 
     private static final long serialVersionUID = 1L;
 

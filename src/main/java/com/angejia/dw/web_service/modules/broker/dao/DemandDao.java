@@ -1,15 +1,15 @@
 package com.angejia.dw.web_service.modules.broker.dao;
 
 import com.angejia.dw.web_service.core.base.dao.BaseDao;
-import com.angejia.dw.web_service.modules.broker.model.DemandTb;
+import com.angejia.dw.web_service.modules.entity.product.angejia.DemandEntity;
 
 
 /**
- * 操作 Demand 数据表接口
  * @author Jason
+ * 操作 Demand 数据表接口
  */
 
-public interface DemandDao extends BaseDao<DemandTb>{
+public interface DemandDao extends BaseDao<DemandEntity>{
 
-    public DemandTb getDemandByBrokerIdAndUserId(Long brokerId, Long userId);
+    public DemandEntity getDemandByBrokerIdAndUserId(Long brokerId, Long userId);
 }

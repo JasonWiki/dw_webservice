@@ -20,7 +20,7 @@ import com.angejia.dw.web_service.core.base.dao.impl.BaseDaoHibernate4;
 
 import com.angejia.dw.web_service.core.base.dao.DataSourceSessionFactory;
 import com.angejia.dw.web_service.modules.broker.dao.DemandDao;
-import com.angejia.dw.web_service.modules.broker.model.DemandTb;;
+import com.angejia.dw.web_service.modules.entity.product.angejia.DemandEntity;;
 
 @Repository("demandDao")
 // spring 整理注入, 必须开启事物
@@ -29,7 +29,7 @@ import com.angejia.dw.web_service.modules.broker.model.DemandTb;;
  * demand 处理方法
  * @author Jason
  */
-public class DemandDaoImpl extends BaseDaoHibernate4<DemandTb> implements DemandDao {
+public class DemandDaoImpl extends BaseDaoHibernate4<DemandEntity> implements DemandDao {
 
     private static final Logger logger = Logger.getLogger(DemandDaoImpl.class);
 
@@ -53,19 +53,19 @@ public class DemandDaoImpl extends BaseDaoHibernate4<DemandTb> implements Demand
     /**
      * 获取需求
      */
-    public DemandTb getDemandByBrokerIdAndUserId(Long brokerId, Long userId) {
+    public DemandEntity getDemandByBrokerIdAndUserId(Long brokerId, Long userId) {
         super.setSessionFactory(dataSourceDao.getProductDataSessionFactory());
 
         // 创建一个查询对象
         Criteria criteria = super.getSessionFactory().getCurrentSession()
-                .createCriteria(DemandTb.class)
+                .createCriteria(DemandEntity.class)
                 // 筛选条件
-                .add(Restrictions.eq("status", DemandTb.DEMAND_STATUS))
+                .add(Restrictions.eq("status", DemandEntity.DEMAND_STATUS))
                 .add(Restrictions.eq("brokerId", brokerId))
                 .add(Restrictions.eq("customerId", userId));
 
         // 返回一条数据
-        DemandTb result = (DemandTb) criteria.uniqueResult();
+        DemandEntity result = (DemandEntity) criteria.uniqueResult();
 
         //System.out.println(demand.getId() + ": " + demand.getCityId() + "," + demand.getDistrictIds() + "," + demand.getBlockIds() + "," + demand.getCommunityIds() + "," + demand.getStatus());
         return result;
@@ -77,20 +77,20 @@ public class DemandDaoImpl extends BaseDaoHibernate4<DemandTb> implements Demand
         // 获取工厂对象
         Session currentSession = super.getSessionFactory().getCurrentSession();
         // 创建一个查询对象
-        Criteria criteria = currentSession.createCriteria(DemandTb.class);
+        Criteria criteria = currentSession.createCriteria(DemandEntity.class);
 
         // 添加限制条件
-        Criterion conditions1 = Restrictions.eq("status", DemandTb.DEMAND_STATUS);
+        Criterion conditions1 = Restrictions.eq("status", DemandEntity.DEMAND_STATUS);
         criteria.add(conditions1);
         criteria.add(Restrictions.eq("brokerId", brokerId));
         criteria.add(Restrictions.eq("customerId", userId));
 
-        System.out.println(DemandTb.DEMAND_STATUS);
+        System.out.println(DemandEntity.DEMAND_STATUS);
         System.out.println(brokerId);
         System.out.println(userId);
 
         // 返回一条数据
-        DemandTb a = (DemandTb) criteria.uniqueResult();
+        DemandEntity a = (DemandEntity) criteria.uniqueResult();
         System.out.println(a.getId() + ": " + a.getCityId() + "," + a.getDistrictIds() + "," + a.getBlockIds() + "," + a.getCommunityIds() + "," + a.getStatus());
 
 
@@ -104,7 +104,7 @@ public class DemandDaoImpl extends BaseDaoHibernate4<DemandTb> implements Demand
 
 
         for (Object obj : list) {
-            DemandTb s = (DemandTb) obj;
+            DemandEntity s = (DemandEntity) obj;
             System.out.println(s.getId() + ": " + s.getCityId() + "," + s.getDistrictIds() + "," + s.getBlockIds() + "," + s.getCommunityIds() + "," + s.getStatus());
         }
         System.out.println(list);

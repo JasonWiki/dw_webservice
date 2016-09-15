@@ -11,15 +11,16 @@ import org.springframework.stereotype.Service;
 
 // service
 import com.angejia.dw.web_service.modules.broker.service.BrokerUserMateInventoryService;
+import com.angejia.dw.web_service.modules.entity.dw.dw_service.ProertyInventoryIndexEntity;
+import com.angejia.dw.web_service.modules.entity.product.angejia.BrokerCustomerBindUserEntity;
+import com.angejia.dw.web_service.modules.entity.product.angejia.DemandEntity;
 import com.angejia.dw.web_service.modules.user.service.UserPortraitService;
+import com.angejia.dw.web_service.modules.inventory.service.InventoryService;
 
 // dao
 import com.angejia.dw.web_service.modules.broker.dao.DemandDao;
 import com.angejia.dw.web_service.modules.broker.dao.BrokerCustomerBindUserDao;
 
-// model
-import com.angejia.dw.web_service.modules.broker.model.DemandTb;
-import com.angejia.dw.web_service.modules.broker.model.BrokerCustomerBindUser;
 
 @Service("brokerUserMateInventoryService")
 public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInventoryService {
@@ -31,6 +32,9 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
     private UserPortraitService userPortraitService;
 
     @Autowired
+    private InventoryService inventoryService;
+    
+    @Autowired
     private BrokerCustomerBindUserDao brokerCustomerBindUserDao;
 
 
@@ -38,16 +42,23 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
         // 最终推荐房源数据
         List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 
-        DemandTb demand = this.getDemand(brokerId, userId);
-        //System.out.println(demand.getId() + ": " + demand.getCityId() + "," + demand.getDistrictIds() + "," + demand.getBlockIds() + "," + demand.getCommunityIds() + "," + demand.getStatus());
+        DemandEntity demand = this.getDemand(brokerId, userId);
+        System.out.println(demand.getId() + ": " + demand.getCityId() + "," + demand.getDistrictIds() + "," + demand.getBlockIds() + "," + demand.getCommunityIds() + "," + demand.getStatus());
 
         if (demand != null) {
-            
+            // 小区搜索
+            ProertyInventoryIndexEntity demandSearch = new ProertyInventoryIndexEntity();
+            demandSearch.setCityId(1);
+            demandSearch.setDistrictId(12);
+            demandSearch.setBlockId(120);
+            demandSearch.setCommunityId(11998);
+            demandSearch.setBedrooms((byte) 2);
+            demandSearch.setPrice(4000000);
+            inventoryService.searchInventoryByEntity(demandSearch, 0, 10);
+
         }
         
-        
-        
-        List<Map<String, String>> userPortrait = userPortraitService.getUserPortraitResult(userId.toString(), cityId.toString());
+        // List<Map<String, String>> userPortrait = userPortraitService.getUserPortraitResult(userId.toString(), cityId.toString());
 
         return result;
     }
@@ -59,11 +70,11 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
      * @param userId
      * @return
      */
-    public DemandTb getDemand(Long brokerId, Long userId) {
-        DemandTb demand = new DemandTb();
+    public DemandEntity getDemand(Long brokerId, Long userId) {
+        DemandEntity demand = new DemandEntity();
 
         // 通过 userId 获取 客户 ID
-        BrokerCustomerBindUser brokerCustomerBindUser = brokerCustomerBindUserDao.getCustomerIdByUserId(Integer.valueOf(userId.toString()));
+        BrokerCustomerBindUserEntity brokerCustomerBindUser = brokerCustomerBindUserDao.getCustomerIdByUserId(Integer.valueOf(userId.toString()));
         if (brokerCustomerBindUser != null) {
             // 通过 uesrId 找到的客户 CustomerId
             Integer customerId = brokerCustomerBindUser.getBrokerCustomerId();

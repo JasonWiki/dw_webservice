@@ -1,7 +1,7 @@
 package com.angejia.dw.web_service.modules.broker.dao;
 
 import com.angejia.dw.web_service.core.base.dao.BaseDao;
-import com.angejia.dw.web_service.modules.broker.model.BrokerCustomerBindUser;
+import com.angejia.dw.web_service.modules.entity.product.angejia.BrokerCustomerBindUserEntity;
 
 
 /**
@@ -9,7 +9,7 @@ import com.angejia.dw.web_service.modules.broker.model.BrokerCustomerBindUser;
  * @author Jason
  */
 
-public interface BrokerCustomerBindUserDao extends BaseDao<BrokerCustomerBindUser>{
+public interface BrokerCustomerBindUserDao extends BaseDao<BrokerCustomerBindUserEntity>{
 
-    public BrokerCustomerBindUser getCustomerIdByUserId(Integer userId);
+    public BrokerCustomerBindUserEntity getCustomerIdByUserId(Integer userId);
 }

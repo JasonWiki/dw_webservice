@@ -31,7 +31,6 @@ import com.angejia.dw.web_service.modules.broker.service.BrokerUserMateInventory
         // 设置返回资源的数据变量
         params = { "root", "result" }
 )
-
 public class BrokerApiAction extends BaseAction {
 
     private static final long serialVersionUID = 1L;
@@ -70,7 +69,7 @@ public class BrokerApiAction extends BaseAction {
         result.put("brokerId", this.getBrokerId());
         result.put("historySqls", "show tables;");
 
-        return this.output("ok", "123");
+        return this.output("ok", "123"); 
     }
 
 
