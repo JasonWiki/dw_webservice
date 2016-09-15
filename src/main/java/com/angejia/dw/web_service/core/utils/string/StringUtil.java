@@ -115,8 +115,8 @@ public class StringUtil {
             }  
         }  
     }  
-    
-    
+
+
     /**
      * string[] 数组转换为 byte[]
      * @param str
@@ -127,15 +127,13 @@ public class StringUtil {
 
         int i = 0;
         for(String s:str){
-            System.out.println(s);
             bytes[i] = Byte.parseByte(s);
             i ++;
         }
         return bytes;
     }
-    
-    
-    
+
+
     /**
      * String 数组转 Integer 数组
      * @param str
@@ -149,5 +147,28 @@ public class StringUtil {
             i ++;
         }
         return rs;
+    }
+
+
+    /**
+     * 数组 join 字符
+     * @param arr
+     * @param sp
+     * @return String
+     */
+    public static String arrJoinStr(String[] arr, String sp) {
+
+        StringBuffer strBuffer = new StringBuffer();
+
+        for (int i=0; i<= arr.length - 1; i ++) {
+            String curSp = "";
+            if ( i < arr.length - 1) {
+                curSp = sp;
+            }
+            String curS = arr[i] + curSp;
+            strBuffer.append( curS );
+        }
+        
+        return strBuffer.toString();
     }
 }

@@ -164,6 +164,9 @@ public class ProertyInventoryIndexEntity implements java.io.Serializable {
     private Integer priceMin;
     private Integer priceMax;
     
+    // 搜索请求来源
+    private String searchFrom;
+    
     
     @Transient
     public Integer[] getDistrictIds() {
@@ -225,6 +228,15 @@ public class ProertyInventoryIndexEntity implements java.io.Serializable {
     }
     public void setPriceMax(Integer priceMax) {
         this.priceMax = priceMax;
+    }
+    
+    
+    @Transient
+    public String getSearchFrom() {
+        return searchFrom;
+    }
+    public void setSearchFrom(String searchFrom) {
+        this.searchFrom = searchFrom;
     }
 
 }

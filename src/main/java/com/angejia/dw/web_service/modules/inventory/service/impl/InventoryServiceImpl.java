@@ -23,8 +23,8 @@ public class InventoryServiceImpl implements InventoryService{
         List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 
         // 限制条件
-        //entity.setStatus( ProertyInventoryIndexEntity.STATUS );
-        //entity.setSurveyStatus( ProertyInventoryIndexEntity.SURVEY_STATUS );
+        entity.setStatus( ProertyInventoryIndexEntity.STATUS ); // 在售
+        // entity.setSurveyStatus( ProertyInventoryIndexEntity.SURVEY_STATUS );    // 已实勘
  
         // 过滤，组合结果集
         List<ProertyInventoryIndexEntity> dataList =  proertyInventoryIndexDao.getInventorysByEntity(entity, offset, limit);
@@ -40,6 +40,7 @@ public class InventoryServiceImpl implements InventoryService{
             inventoryInfo.put("bedrooms_id", t.getBedrooms().toString());
             inventoryInfo.put("price", t.getPrice().toString());
             inventoryInfo.put("price_tier", t.getPriceTier().toString());
+            inventoryInfo.put("search_from", entity.getSearchFrom().toString());
             result.add(inventoryInfo);
 
             System.out.println(
@@ -58,10 +59,7 @@ public class InventoryServiceImpl implements InventoryService{
                + " - " + t.getInventoryType()
                + " - " + t.getInventoryTypeId()
             );
-            
-            
         }
-        
 
         return result;
     }

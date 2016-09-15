@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +18,9 @@ import com.angejia.dw.web_service.core.utils.hbase.HBaseUtil;
 import com.angejia.dw.web_service.core.utils.json.JsonUtil;
 
 import com.angejia.dw.web_service.modules.user.service.UserPortraitService;
-
 import com.angejia.dw.web_service.modules.user.dao.UserPortraitDao;
+
+import com.angejia.dw.web_service.modules.entity.portrait.UserTagsEntity;
 
 @Service("userPortraitService")
 public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitService {
@@ -28,14 +28,6 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
     @Autowired
     private UserPortraitDao userPortraitDao;
 
-
-    // 标签分数
-    public static final String CITY_TAG_CODE = "city";
-    public static final String DISTRICT_TAG_CODE = "district";
-    public static final String BLOCK_TAG_CODE = "block";
-    public static final String COMMUNITY_TAG_CODE = "community";
-    public static final String BEDROOMS_TAG_CODE = "bedrooms";
-    public static final String PRICE_TAG_CODE = "price";
 
     // 标签组
     public static final String ACTION_NEEDS_CODE = "actionNeeds";
@@ -69,23 +61,23 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
 
                 // 根据出现的标签加分
                 switch(curTagCode) {
-                    case CITY_TAG_CODE :
-                        curTagGroupScore += Integer.valueOf(tagsScore.get(CITY_TAG_CODE).get(curTagId));
+                    case UserTagsEntity.CITY_TAG_CODE :
+                        curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.CITY_TAG_CODE).get(curTagId));
                         break;
-                    case DISTRICT_TAG_CODE :
-                        curTagGroupScore += Integer.valueOf(tagsScore.get(DISTRICT_TAG_CODE).get(curTagId));
+                    case UserTagsEntity.DISTRICT_TAG_CODE :
+                        curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.DISTRICT_TAG_CODE).get(curTagId));
                         break;
-                    case BLOCK_TAG_CODE :
-                        curTagGroupScore += Integer.valueOf(tagsScore.get(BLOCK_TAG_CODE).get(curTagId));
+                    case UserTagsEntity.BLOCK_TAG_CODE :
+                        curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.BLOCK_TAG_CODE).get(curTagId));
                         break;
-                    case COMMUNITY_TAG_CODE :
-                        curTagGroupScore += Integer.valueOf(tagsScore.get(COMMUNITY_TAG_CODE).get(curTagId));
+                    case UserTagsEntity.COMMUNITY_TAG_CODE :
+                        curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.COMMUNITY_TAG_CODE).get(curTagId));
                         break;
-                    case BEDROOMS_TAG_CODE :
-                        curTagGroupScore += Integer.valueOf(tagsScore.get(BEDROOMS_TAG_CODE).get(curTagId));
+                    case UserTagsEntity.BEDROOMS_TAG_CODE :
+                        curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.BEDROOMS_TAG_CODE).get(curTagId));
                         break;
-                    case PRICE_TAG_CODE :
-                        curTagGroupScore += Integer.valueOf(tagsScore.get(PRICE_TAG_CODE).get(curTagId));
+                    case UserTagsEntity.PRICE_TAG_CODE :
+                        curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.PRICE_TAG_CODE).get(curTagId));
                         break;
                     default :
                 }
@@ -110,7 +102,7 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
         // 保留当前城市标签
         for (int i =0; i <= actionNeeds.size()-1; i ++) {
             Map<String, String> tagsGroupInfo = actionNeeds.get(i);
-            if (tagsGroupInfo.get(CITY_TAG_CODE) != cityId) continue;
+            if (tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE) != cityId) continue;
             result.add(tagsGroupInfo);
         }
 
@@ -132,7 +124,7 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
         Map<String, Map<String,String>> result = new HashMap<String, Map<String,String>>();
 
         // 获取标签分数组
-        List<String> columnNames =  Arrays.asList(CITY_TAG_CODE, DISTRICT_TAG_CODE, BLOCK_TAG_CODE, COMMUNITY_TAG_CODE, BEDROOMS_TAG_CODE, PRICE_TAG_CODE);
+        List<String> columnNames =  Arrays.asList(UserTagsEntity.CITY_TAG_CODE, UserTagsEntity.DISTRICT_TAG_CODE, UserTagsEntity.BLOCK_TAG_CODE, UserTagsEntity.COMMUNITY_TAG_CODE, UserTagsEntity.BEDROOMS_TAG_CODE, UserTagsEntity.PRICE_TAG_CODE);
         Map<String, String> tagsScore = userPortraitDao.getUserPortraitTagsByRowkey(rowKey, columnNames);
 
         // 标签分数
@@ -144,20 +136,20 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
         Map<String, String> priceTagScore = new HashMap<String, String>();
 
         if (tagsScore != null) {
-            if (tagsScore.get(CITY_TAG_CODE) != null) cityTagScore = JsonUtil.JsonStrToMap(tagsScore.get(CITY_TAG_CODE));
-            if (tagsScore.get(DISTRICT_TAG_CODE) != null) districtTagScore = JsonUtil.JsonStrToMap(tagsScore.get(DISTRICT_TAG_CODE));
-            if (tagsScore.get(BLOCK_TAG_CODE) != null) blockTagScore = JsonUtil.JsonStrToMap(tagsScore.get(BLOCK_TAG_CODE));
-            if (tagsScore.get(COMMUNITY_TAG_CODE) != null) communityTagScore = JsonUtil.JsonStrToMap(tagsScore.get(COMMUNITY_TAG_CODE));
-            if (tagsScore.get(BEDROOMS_TAG_CODE) != null) bedroomsTagScore = JsonUtil.JsonStrToMap(tagsScore.get(BEDROOMS_TAG_CODE));
-            if (tagsScore.get(PRICE_TAG_CODE) != null) priceTagScore = JsonUtil.JsonStrToMap(tagsScore.get(PRICE_TAG_CODE));
+            if (tagsScore.get(UserTagsEntity.CITY_TAG_CODE) != null) cityTagScore = JsonUtil.JsonStrToMap(tagsScore.get(UserTagsEntity.CITY_TAG_CODE));
+            if (tagsScore.get(UserTagsEntity.DISTRICT_TAG_CODE) != null) districtTagScore = JsonUtil.JsonStrToMap(tagsScore.get(UserTagsEntity.DISTRICT_TAG_CODE));
+            if (tagsScore.get(UserTagsEntity.BLOCK_TAG_CODE) != null) blockTagScore = JsonUtil.JsonStrToMap(tagsScore.get(UserTagsEntity.BLOCK_TAG_CODE));
+            if (tagsScore.get(UserTagsEntity.COMMUNITY_TAG_CODE) != null) communityTagScore = JsonUtil.JsonStrToMap(tagsScore.get(UserTagsEntity.COMMUNITY_TAG_CODE));
+            if (tagsScore.get(UserTagsEntity.BEDROOMS_TAG_CODE) != null) bedroomsTagScore = JsonUtil.JsonStrToMap(tagsScore.get(UserTagsEntity.BEDROOMS_TAG_CODE));
+            if (tagsScore.get(UserTagsEntity.PRICE_TAG_CODE) != null) priceTagScore = JsonUtil.JsonStrToMap(tagsScore.get(UserTagsEntity.PRICE_TAG_CODE));
         } 
 
-        result.put(CITY_TAG_CODE, cityTagScore);
-        result.put(DISTRICT_TAG_CODE, districtTagScore);
-        result.put(BLOCK_TAG_CODE, blockTagScore);
-        result.put(COMMUNITY_TAG_CODE, communityTagScore);
-        result.put(BEDROOMS_TAG_CODE, bedroomsTagScore);
-        result.put(PRICE_TAG_CODE, priceTagScore);
+        result.put(UserTagsEntity.CITY_TAG_CODE, cityTagScore);
+        result.put(UserTagsEntity.DISTRICT_TAG_CODE, districtTagScore);
+        result.put(UserTagsEntity.BLOCK_TAG_CODE, blockTagScore);
+        result.put(UserTagsEntity.COMMUNITY_TAG_CODE, communityTagScore);
+        result.put(UserTagsEntity.BEDROOMS_TAG_CODE, bedroomsTagScore);
+        result.put(UserTagsEntity.PRICE_TAG_CODE, priceTagScore);
 
         return result;
     }
