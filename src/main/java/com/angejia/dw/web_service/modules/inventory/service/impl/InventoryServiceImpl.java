@@ -40,9 +40,12 @@ public class InventoryServiceImpl implements InventoryService{
             inventoryInfo.put("bedrooms_id", t.getBedrooms().toString());
             inventoryInfo.put("price", t.getPrice().toString());
             inventoryInfo.put("price_tier", t.getPriceTier().toString());
-            inventoryInfo.put("search_from", entity.getSearchFrom().toString());
+            inventoryInfo.put("inventory_type", t.getInventoryType().toString());
+            
+            if (entity.getSearchFrom() != null) inventoryInfo.put("search_from", entity.getSearchFrom().toString());
             result.add(inventoryInfo);
 
+            /*
             System.out.println(
                "搜索房源: "
                + t.getInventoryId() 
@@ -59,6 +62,7 @@ public class InventoryServiceImpl implements InventoryService{
                + " - " + t.getInventoryType()
                + " - " + t.getInventoryTypeId()
             );
+            */
         }
 
         return result;

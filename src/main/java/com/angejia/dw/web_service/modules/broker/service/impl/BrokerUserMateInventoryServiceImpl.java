@@ -103,7 +103,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
                     );
             demandBlockSearch.setPriceMin(priceMin);
             demandBlockSearch.setPriceMax(priceMax);
-            demandCommunitySearch.setSearchFrom("demand_block");
+            demandBlockSearch.setSearchFrom("demand_block");
 
             // 搜索房源
             result.addAll(inventoryService.searchInventoryByEntity(demandBlockSearch, 0, 20));
