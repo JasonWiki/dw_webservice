@@ -223,39 +223,16 @@
  
     <!-- 插件 -->
     <plugins>
-
-      <!-- 指定 JDK 版本 -->
-      <plugin>
+       <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.3.2</version>
-          <configuration>
-              <source>1.7</source>
-              <target>1.7</target>
+          <version>2.5.1</version>
+                <configuration>
+                <source>1.7</source>
+                <target>1.7</target>
+                <encoding>utf-8</encoding>
           </configuration>
-      </plugin>
-
-      <!-- assembly 打包插件 -->
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <descriptorRefs>
-            <!-- 打包依赖后的 jar 后缀名 -->
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id> <!-- this is used for inheritance merges -->
-            <phase>package</phase> <!-- bind to the packaging phase -->
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
+        </plugin>
     </plugins>
 
   </build>
