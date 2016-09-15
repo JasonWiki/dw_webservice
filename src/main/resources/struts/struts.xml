@@ -12,7 +12,7 @@
     <constant name="struts.custom.i18n.resources" value="resources/content/Language"/>
 
     <!-- 指定每次请求到达，重新加载资源文件, 开发是: true , 部署时 false -->
-    <constant name="struts.i18n.reload" value="false" />
+    <constant name="struts.i18n.reload" value="true" />
 
     <!-- 指定每次配置文件更改后，自动重新加载 -->
     <constant name="struts.configuration.xml.reload" value="false" />
