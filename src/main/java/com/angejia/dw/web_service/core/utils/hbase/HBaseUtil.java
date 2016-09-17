@@ -98,7 +98,9 @@ public class HBaseUtil {
 
     public Configuration getConfiguration() {
         if (configuration == null) {
-            Configuration conf = HBaseConfiguration.create();  
+            //Configuration conf = HBaseConfiguration.create();  
+            //conf.set("hbase.zookeeper.quorum", this.getZookeepers());
+            Configuration conf = new HBaseConfiguration();
             conf.set("hbase.zookeeper.quorum", this.getZookeepers());
             configuration = conf;
         }
