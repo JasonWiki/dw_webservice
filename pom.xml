@@ -204,7 +204,14 @@
       <artifactId>hbase-server</artifactId>
       <version>1.0.0</version>
     </dependency>
-
+    
+    <!-- hbase-protocol -->
+    <dependency>
+      <groupId>org.apache.hbase</groupId>
+      <artifactId>hbase-protocol</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+ 
 
     <!-- json-simple -->
     <dependency>
