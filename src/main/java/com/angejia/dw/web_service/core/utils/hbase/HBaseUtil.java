@@ -98,9 +98,7 @@ public class HBaseUtil {
 
     public Configuration getConfiguration() {
         if (configuration == null) {
-            //Configuration conf = HBaseConfiguration.create();  
-            //conf.set("hbase.zookeeper.quorum", this.getZookeepers());
-            Configuration conf = new HBaseConfiguration();
+            Configuration conf = HBaseConfiguration.create();  
             conf.set("hbase.zookeeper.quorum", this.getZookeepers());
             configuration = conf;
         }
@@ -127,7 +125,6 @@ public class HBaseUtil {
     }
 
 
-    @SuppressWarnings("deprecation")
     public HTablePool getTablePool() {
         if (tablePool == null) {
             tablePool = new HTablePool(this.getConfiguration(), poolsize);
@@ -138,18 +135,6 @@ public class HBaseUtil {
         this.tablePool = tablePool;
     }
 
-
-    @SuppressWarnings("deprecation")
-    public HTable getHTable(String tableName) {
-        HTable htable = null;
-        try {
-            htable = new HTable(this.getConfiguration(), tableName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return htable;
-    }
-    
 
     // list Table
     public void listTable() {
@@ -167,8 +152,7 @@ public class HBaseUtil {
     public Result findByKey(String tableName, String rowKey) {
 
         // 获取表连接池
-        //HTableInterface table = this.getTablePool().getTable(tableName);
-        HTableInterface table = this.getHTable(tableName);
+        HTableInterface table = this.getTablePool().getTable(tableName);
 
         // 查询条件
         Get get = new Get(Bytes.toBytes(rowKey));

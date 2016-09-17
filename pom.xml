@@ -211,6 +211,13 @@
       <artifactId>hbase-protocol</artifactId>
       <version>1.0.0</version>
     </dependency>
+    
+    <!-- htrace-core< -->
+    <dependency>
+      <groupId>org.apache.htrace</groupId>
+      <artifactId>htrace-core</artifactId>
+      <version>3.1.0-incubating</version>
+    </dependency>
  
 
     <!-- json-simple -->
