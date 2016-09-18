@@ -97,7 +97,7 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
             @Override
             public int compare(Map<String, String> o1, Map<String, String> o2) {
               // 降序
-              return Integer.parseInt(o2.get("cnt")) - Integer.parseInt(o1.get("cnt"));
+              return Integer.parseInt(o1.get("cnt")) - Integer.parseInt(o2.get("cnt"));
             }
         });
 
@@ -111,7 +111,6 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
             if (tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE) == null 
                || tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE).equals(cityId) == false
              ) continue;
-            // if (tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE).equals(cityId) == false) continue;
 
             result.add(tagsGroupInfo);
         }

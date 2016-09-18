@@ -114,15 +114,14 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
         System.out.println("用户画像:  数量: " + userPortrait.size() + " - " +  userPortrait);
 
         for (int i =0; i <= userPortrait.size()-1; i ++) {
-            
+
             if (i >= 5) break;
-            
+
             Map<String, String> userPortraitInfo = userPortrait.get(i);
 
             ProertyInventoryIndexEntity userPortraitSearch = new ProertyInventoryIndexEntity();
 
-            
-            System.out.println("----------");
+            System.out.println("画像标签 index : " + i + " - 分数 : " + userPortraitInfo.get("cn") + " ---------- ");
             // 城市 Id
             if (userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE) != null) {
                 System.out.println(UserTagsEntity.CITY_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE));
