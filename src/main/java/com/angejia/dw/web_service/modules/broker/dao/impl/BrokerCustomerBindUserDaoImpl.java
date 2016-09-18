@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 // 代表一次查询
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 // 生成查询条件
 import org.hibernate.criterion.Restrictions;
 
@@ -42,7 +43,10 @@ public class BrokerCustomerBindUserDaoImpl extends BaseDaoHibernate4<BrokerCusto
                 .createCriteria(BrokerCustomerBindUserEntity.class)
                 // 筛选条件
                 .add(Restrictions.eq("isActive", BrokerCustomerBindUserEntity.IS_ACTIVE))
-                .add(Restrictions.eq("userId", userId));
+                .add(Restrictions.eq("userId", userId))
+                .addOrder(Order.desc("id"))
+                .setMaxResults(1)
+                ;
 
         // 获取一条记录
         BrokerCustomerBindUserEntity result = (BrokerCustomerBindUserEntity) criteria.uniqueResult();

@@ -52,7 +52,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
         // 客户需求
         DemandEntity demand = this.getDemand(brokerId, userId, cityId);
-        demand = null;
+        //demand = null;
 
         if (demand != null) {
             System.out.println(
@@ -111,7 +111,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
         //客户画像
         List<Map<String, String>> userPortrait = userPortraitService.getUserPortraitResult(userId.toString(), cityId.toString());
-        System.out.println("用户画像:  数量" + userPortrait.size() + " - " +  userPortrait);
+        System.out.println("用户画像:  数量: " + userPortrait.size() + " - " +  userPortrait);
 
         for (int i =0; i <= userPortrait.size()-1; i ++) {
             
