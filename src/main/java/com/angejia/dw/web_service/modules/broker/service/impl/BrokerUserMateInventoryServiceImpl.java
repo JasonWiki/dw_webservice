@@ -121,7 +121,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
             ProertyInventoryIndexEntity userPortraitSearch = new ProertyInventoryIndexEntity();
 
-            System.out.println("画像标签 index : " + i + " - 分数 : " + userPortraitInfo.get("cn") + " ---------- ");
+            System.out.println("--- 画像标签 index : " + i + " - 分数 : " + userPortraitInfo.get("score") + " ---");
             // 城市 Id
             if (userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE) != null) {
                 System.out.println(UserTagsEntity.CITY_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE));

@@ -97,7 +97,7 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
             @Override
             public int compare(Map<String, String> o1, Map<String, String> o2) {
               // 降序
-              return Integer.parseInt(o1.get("cnt")) - Integer.parseInt(o2.get("cnt"));
+              return Integer.parseInt(o1.get("score")) - Integer.parseInt(o2.get("score"));
             }
         });
 
