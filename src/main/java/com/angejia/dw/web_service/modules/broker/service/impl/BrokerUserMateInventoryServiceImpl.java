@@ -12,7 +12,7 @@ import com.angejia.dw.web_service.core.utils.string.StringUtil;
 
 // service
 import com.angejia.dw.web_service.modules.broker.service.BrokerUserMateInventoryService;
-import com.angejia.dw.web_service.modules.entity.dw.dw_service.ProertyInventoryIndexEntity;
+import com.angejia.dw.web_service.modules.entity.dw.dw_service.PropertyInventoryIndexEntity;
 import com.angejia.dw.web_service.modules.entity.portrait.UserTagsEntity;
 import com.angejia.dw.web_service.modules.entity.product.angejia.BrokerCustomerBindUserEntity;
 import com.angejia.dw.web_service.modules.entity.product.angejia.DemandEntity;
@@ -76,7 +76,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
             System.out.println("预算: " + budget + " 最小浮动: " + priceMin + " 最大浮动: " + priceMax);
 
             // 小区搜索
-            ProertyInventoryIndexEntity demandCommunitySearch = new ProertyInventoryIndexEntity();
+            PropertyInventoryIndexEntity demandCommunitySearch = new PropertyInventoryIndexEntity();
             demandCommunitySearch.setCityId(demand.getCityId());
             demandCommunitySearch.setCommunityIds(
                     StringUtil.strArrToIntArr(  demand.getCommunityIds().split(";") )
@@ -93,7 +93,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
 
             // 扩展到版块界别搜索
-            ProertyInventoryIndexEntity demandBlockSearch = new ProertyInventoryIndexEntity();
+            PropertyInventoryIndexEntity demandBlockSearch = new PropertyInventoryIndexEntity();
             demandBlockSearch.setCityId(demand.getCityId());
             demandBlockSearch.setBlockIds(
                     StringUtil.strArrToIntArr(  demand.getBlockIds().split(";") )
@@ -119,7 +119,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
             Map<String, String> userPortraitInfo = userPortrait.get(i);
 
-            ProertyInventoryIndexEntity userPortraitSearch = new ProertyInventoryIndexEntity();
+            PropertyInventoryIndexEntity userPortraitSearch = new PropertyInventoryIndexEntity();
 
             System.out.println("--- 画像标签 index : " + i + " - 分数 : " + userPortraitInfo.get(UserTagsEntity.TAG_GROUP_SCORE) + " ---");
             // 城市 Id

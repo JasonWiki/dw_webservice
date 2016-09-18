@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.angejia.dw.web_service.modules.inventory.service.InventoryService;
-import com.angejia.dw.web_service.modules.entity.dw.dw_service.ProertyInventoryIndexEntity;
+import com.angejia.dw.web_service.modules.entity.dw.dw_service.PropertyInventoryIndexEntity;
 import com.angejia.dw.web_service.modules.inventory.dao.PropertyInventoryIndexDao;
 
 @Service("inventoryService")
@@ -18,18 +18,18 @@ public class InventoryServiceImpl implements InventoryService{
     @Autowired
     private PropertyInventoryIndexDao proertyInventoryIndexDao;
 
-    public List<Map<String, String>> searchInventoryByEntity(ProertyInventoryIndexEntity entity, Integer offset, Integer limit) {
+    public List<Map<String, String>> searchInventoryByEntity(PropertyInventoryIndexEntity entity, Integer offset, Integer limit) {
 
         List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 
         // 限制条件
-        entity.setStatus( ProertyInventoryIndexEntity.STATUS ); // 在售
-        // entity.setSurveyStatus( ProertyInventoryIndexEntity.SURVEY_STATUS );    // 已实勘
+        entity.setStatus( PropertyInventoryIndexEntity.STATUS ); // 在售
+        entity.setSurveyStatus( PropertyInventoryIndexEntity.SURVEY_STATUS );    // 已实勘
  
         // 过滤，组合结果集
-        List<ProertyInventoryIndexEntity> dataList =  proertyInventoryIndexDao.getInventorysByEntity(entity, offset, limit);
+        List<PropertyInventoryIndexEntity> dataList =  proertyInventoryIndexDao.getInventorysByEntity(entity, offset, limit);
 
-        for(ProertyInventoryIndexEntity t : dataList) {
+        for(PropertyInventoryIndexEntity t : dataList) {
 
             Map<String, String> inventoryInfo = new HashMap<String, String>();
             inventoryInfo.put("inventory_id", t.getInventoryId().toString());

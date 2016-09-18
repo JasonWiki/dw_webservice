@@ -13,12 +13,12 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "proerty_inventory_index")
-public class ProertyInventoryIndexEntity implements java.io.Serializable {
+public class PropertyInventoryIndexEntity implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
-    
-    public static final Byte STATUS = 2;    // 有效
-    public static final Byte SURVEY_STATUS = 2; // 已实勘
-    
+
+    public static final Byte STATUS = 2;            // 有效
+    public static final Byte SURVEY_STATUS = 2;     // 已实勘
+
     private Long inventoryId;
     private Integer cityId;
     private Integer districtId;

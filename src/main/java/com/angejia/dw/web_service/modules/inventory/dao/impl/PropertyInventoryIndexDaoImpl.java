@@ -16,14 +16,14 @@ import com.angejia.dw.web_service.core.base.dao.impl.BaseDaoHibernate4;
 import com.angejia.dw.web_service.core.base.dao.DataSourceSessionFactory;
 
 import com.angejia.dw.web_service.modules.inventory.dao.PropertyInventoryIndexDao;
-import com.angejia.dw.web_service.modules.entity.dw.dw_service.ProertyInventoryIndexEntity;
+import com.angejia.dw.web_service.modules.entity.dw.dw_service.PropertyInventoryIndexEntity;
 
 
 
 @Repository("proertyInventoryIndexDao")
 //spring 整理注入, 必须开启事物
 @Transactional("dwDataTransactionManager")
-public class PropertyInventoryIndexDaoImpl extends BaseDaoHibernate4<ProertyInventoryIndexEntity> implements PropertyInventoryIndexDao {
+public class PropertyInventoryIndexDaoImpl extends BaseDaoHibernate4<PropertyInventoryIndexEntity> implements PropertyInventoryIndexDao {
 
 
     private static final Logger logger = Logger.getLogger(PropertyInventoryIndexDaoImpl.class);
@@ -35,13 +35,13 @@ public class PropertyInventoryIndexDaoImpl extends BaseDaoHibernate4<ProertyInve
     private DataSourceSessionFactory dataSourceDao;
 
     // 
-    public List<ProertyInventoryIndexEntity> getInventorysByEntity(ProertyInventoryIndexEntity entity, Integer offset, Integer limit) {
+    public List<PropertyInventoryIndexEntity> getInventorysByEntity(PropertyInventoryIndexEntity entity, Integer offset, Integer limit) {
 
         super.setSessionFactory(dataSourceDao.getDwDataSessionFactory());
 
         // 创建一个查询对象
         Criteria criteria = super.getSessionFactory().getCurrentSession()
-                   .createCriteria(ProertyInventoryIndexEntity.class);
+                   .createCriteria(PropertyInventoryIndexEntity.class);
 
         // 处理筛选条件
 
@@ -124,14 +124,14 @@ public class PropertyInventoryIndexDaoImpl extends BaseDaoHibernate4<ProertyInve
     
     
     
-    public List<ProertyInventoryIndexEntity> getInventorysByEntityBak(ProertyInventoryIndexEntity entity, Integer offset, Integer limit) {
+    public List<PropertyInventoryIndexEntity> getInventorysByEntityBak(PropertyInventoryIndexEntity entity, Integer offset, Integer limit) {
         // 保存结果
         //List<ProertyInventoryIndexEntity> result = new ArrayList<ProertyInventoryIndexEntity>();
 
         super.setSessionFactory(dataSourceDao.getDwDataSessionFactory());
      // 创建一个查询对象
         Criteria criteria = super.getSessionFactory().getCurrentSession()
-                .createCriteria(ProertyInventoryIndexEntity.class)
+                .createCriteria(PropertyInventoryIndexEntity.class)
                 // 筛选条件
                 .add(Restrictions.eq("cityId", entity.getCityId()))
                 .add(Restrictions.eq("districtId", entity.getDistrictId()))
