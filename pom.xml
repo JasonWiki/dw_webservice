@@ -9,6 +9,33 @@
   <url>http://maven.apache.org</url>
 
 
+  <!-- 增加额外的源 -->
+  <repositories>
+
+    <repository>
+        <id>Maven Repository</id>
+        <url>http://repo.maven.apache.org/maven2</url>
+    </repository> 
+
+    <repository>
+        <id>Apache Repository</id>
+        <url>https://repository.apache.org/content/repositories/releases</url>
+    </repository> 
+
+    <repository>
+        <id>JBoss Repository</id>
+        <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+    </repository> 
+
+    <repository>
+        <id>Cloudera Repository</id>
+        <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+    </repository> 
+
+  </repositories>
+
+
+  <!-- 依赖管理 -->
   <dependencies>
   
     <dependency>
@@ -159,9 +186,31 @@
 
 
 
-    
+    <!--  
+        注意, 如果出现了 Could not initialize class org.apache.hadoop.hbase.protobuf.ProtobufUtil 错误是由于 Hadoop 的包与 HBase 不兼容
+   -->
+   
+    <!-- hadoop-common -->
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-common</artifactId>
+      <version>2.6.0</version>
+    </dependency>
 
+    <!-- hadoop-hdfs -->
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-hdfs</artifactId>
+      <version>2.6.0</version>
+    </dependency>
 
+    <!-- hadoop-client -->
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client</artifactId>
+      <version>2.6.0</version>
+    </dependency>
+   
     <!-- hbase-common -->
     <dependency>
       <groupId>org.apache.hbase</groupId>
@@ -216,7 +265,7 @@
     <!-- 插件 -->
     <plugins>
 
-      <!-- 指定 JDK 版本 -->
+      <!-- 打包插件 -->
       <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
