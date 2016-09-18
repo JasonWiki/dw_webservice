@@ -15,7 +15,7 @@
     <constant name="struts.i18n.reload" value="true" />
 
     <!-- 指定每次配置文件更改后，自动重新加载 -->
-    <constant name="struts.configuration.xml.reload" value="false" />
+    <constant name="struts.configuration.xml.reload" value="true" />
 
     <!-- 设置浏览器是否缓存静态内容 -->
     <constant name="struts.serve.static.browserCache" value="false" />

@@ -29,9 +29,6 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
     private UserPortraitDao userPortraitDao;
 
 
-    // 标签组
-    public static final String ACTION_NEEDS_CODE = "actionNeeds";
-
 
     /**
      * 获取用户画像结果
@@ -40,15 +37,20 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
      * @return  List<Map<标签名, 标签 ID>>
      */
     public List<Map<String, String>> getUserPortraitResult(String rowKey, String cityId) {
+        System.out.println("用户画像 Service: rowKey - " + rowKey + " cityId - " + cityId);
+
         List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 
         // 需求标签组
         List<Map<String,String>> actionNeeds = this.getUserPortraitActionNeedsList(rowKey);
+        //System.out.println("画像需求标签组: " + actionNeeds);
         if (actionNeeds.isEmpty()) return result;
 
         // 标签组分数
         Map<String, Map<String,String>> tagsScore  = this.getUserPortraitTagsScore(rowKey);
+        //System.out.println("画像需求分数标签组: " + tagsScore);
         if (tagsScore.isEmpty()) return result;
+
 
         // 遍历 List
         for (int i =0; i <= actionNeeds.size()-1; i ++) {
@@ -58,6 +60,8 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
             for(Map.Entry<String, String> curTags : tagsGroupInfo.entrySet()) {
                 String curTagCode = curTags.getKey();   // 当前标签组标签的 code , 比如 city 标签
                 String curTagId = curTags.getValue();   // 当前标签的 id, 比如 city 标签的 id 为 1
+
+                //System.out.println(curTagCode + "  " + curTagId);
 
                 // 根据出现的标签加分
                 switch(curTagCode) {
@@ -88,7 +92,6 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
             tagsGroupInfo.put("score", tagsScoreTotal.toString());
         }
 
-
         // 按照分数排序
         Collections.sort(actionNeeds,new Comparator<Map<String, String>> (){
             @Override
@@ -102,15 +105,20 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
         // 保留当前城市标签
         for (int i =0; i <= actionNeeds.size()-1; i ++) {
             Map<String, String> tagsGroupInfo = actionNeeds.get(i);
-            if (tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE) != cityId) continue;
+
+            //System.out.println(tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE) + " - " + cityId + " - " + tagsGroupInfo);
+
+            if (tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE).equals(cityId) == false) continue;
+
             result.add(tagsGroupInfo);
         }
+
 
         //System.out.println(actionNeeds.size() + " :" + actionNeeds);
         //System.out.println(result.size() + " :" + result);
 
+        
         return result;
- 
     }
 
 
@@ -165,14 +173,14 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
         Map<String, Map<String,String>> result = new HashMap<String, Map<String,String>>();
 
         // 需求标签组
-        List<String> columnNames =  Arrays.asList(ACTION_NEEDS_CODE);
+        List<String> columnNames =  Arrays.asList(UserTagsEntity.ACTION_NEEDS_CODE);
         Map<String, String> actionNeeds = userPortraitDao.getUserPortraitNeedsByRowkey(rowKey, columnNames);
 
         if (actionNeeds == null) return result;
 
         // 提取标签
-        if (actionNeeds.get(ACTION_NEEDS_CODE) != null) {
-            result =  JsonUtil.JsonStrToMap(actionNeeds.get(ACTION_NEEDS_CODE));
+        if (actionNeeds.get(UserTagsEntity.ACTION_NEEDS_CODE) != null) {
+            result =  JsonUtil.JsonStrToMap(actionNeeds.get(UserTagsEntity.ACTION_NEEDS_CODE));
         }
 
         return result;
@@ -190,6 +198,7 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
 
         // 提取标签
         Map<String, Map<String,String>> actionNeedsMap =  this.getUserPortraitActionNeedsMap(rowKey);
+        //System.out.println(actionNeedsMap);
 
         // 放入 list 中
         for(Map.Entry<String, Map<String, String>> tags : actionNeedsMap.entrySet()) {
@@ -201,6 +210,7 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
             result.add(tagsGroupInfo);
         }
 
+        //System.out.println(result);
         return result;
     }
 

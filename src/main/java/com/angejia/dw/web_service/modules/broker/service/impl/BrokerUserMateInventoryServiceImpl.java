@@ -90,8 +90,8 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
             // 搜索房源
             result.addAll(inventoryService.searchInventoryByEntity(demandCommunitySearch, 0, 20));
-            
-            
+
+
             // 扩展到版块界别搜索
             ProertyInventoryIndexEntity demandBlockSearch = new ProertyInventoryIndexEntity();
             demandBlockSearch.setCityId(demand.getCityId());
@@ -107,11 +107,11 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
             // 搜索房源
             result.addAll(inventoryService.searchInventoryByEntity(demandBlockSearch, 0, 20));
-
         }
 
         //客户画像
         List<Map<String, String>> userPortrait = userPortraitService.getUserPortraitResult(userId.toString(), cityId.toString());
+        System.out.println("用户画像:  数量" + userPortrait.size() + " - " +  userPortrait);
 
         for (int i =0; i <= userPortrait.size()-1; i ++) {
             
@@ -122,43 +122,40 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
             ProertyInventoryIndexEntity userPortraitSearch = new ProertyInventoryIndexEntity();
 
             // 城市 Id
-            if (userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE) != "") {
+            if (userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE) != null) {
                 userPortraitSearch.setCityId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE)) );
             }
-            
+
             // 区域 Id
-            if (userPortraitInfo.get(UserTagsEntity.DISTRICT_TAG_CODE) != "") {
+            if (userPortraitInfo.get(UserTagsEntity.DISTRICT_TAG_CODE) != null) {
                 userPortraitSearch.setDistrictId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.DISTRICT_TAG_CODE)) );
             }
-            
+
             // 版块 Id
-            if (userPortraitInfo.get(UserTagsEntity.BLOCK_TAG_CODE) != "") {
+            if (userPortraitInfo.get(UserTagsEntity.BLOCK_TAG_CODE) != null) {
                 userPortraitSearch.setBlockId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.BLOCK_TAG_CODE)) );
             }
-            
+
             // 小区 Id
-            if (userPortraitInfo.get(UserTagsEntity.COMMUNITY_TAG_CODE) != "") {
+            if (userPortraitInfo.get(UserTagsEntity.COMMUNITY_TAG_CODE) != null) {
                 userPortraitSearch.setCommunityId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.COMMUNITY_TAG_CODE)) );
             }
-            
+
             // 户型 id
-            if (userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE) != "") {
+            if (userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE) != null) {
                 userPortraitSearch.setBedrooms( Byte.parseByte(userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE)) );
             }
-            
+
             // 价格段 id
-            if (userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE) != "") {
+            if (userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE) != null) {
                 userPortraitSearch.setPriceTier( Byte.parseByte(userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE)) );
             }
-            
+
             userPortraitSearch.setSearchFrom("user_portrait");
-            
+
             result.addAll(inventoryService.searchInventoryByEntity(userPortraitSearch, 0, 20));
         }
-        
-        System.out.println(userPortrait);
-        //*/
-        
+
         return result;
     }
 

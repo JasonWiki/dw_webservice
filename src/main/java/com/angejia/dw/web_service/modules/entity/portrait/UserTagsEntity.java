@@ -12,15 +12,22 @@ public class UserTagsEntity {
     public static final String COMMUNITY_TAG_CODE = "community";
     public static final String BEDROOMS_TAG_CODE = "bedrooms";
     public static final String PRICE_TAG_CODE = "price";
+    
+    // 标签组
+    public static final String ACTION_NEEDS_CODE = "actionNeeds";
 
     // 户型 映射
     public static Map<String, String> BEDROOMS_MAP = new HashMap<String, String>() {
         {
+            put("7", "6"); 
+            
             put("6", "5"); 
             put("5", "4");  
             put("4", "3");  
             put("3", "2");
             put("2", "1");
+            
+            put("1", "0");
         }
     };
 }

@@ -22,6 +22,7 @@ public class UserPortraitDaoImpl extends HBaseUtil implements UserPortraitDao  {
     private Properties commonProperties;
 
     public void init() {
+        System.out.println("zookeeper: " + commonProperties.getProperty("hadoop.zookeepers"));
         // 设置 zookeeper 地址
         super.setZookeepers(commonProperties.getProperty("hadoop.zookeepers"));
     }
@@ -40,6 +41,9 @@ public class UserPortraitDaoImpl extends HBaseUtil implements UserPortraitDao  {
     public Map<String, String> getUserPortraitNeedsByRowkey(String Rowkey, List<String> columnNames) {
 
         this.init();
+
+        //System.out.println(Rowkey + " - " + columnNames);
+        //System.out.println(super.select("userPortrait", Rowkey, "needs", columnNames));
 
         return super.select("userPortrait", Rowkey, "needs", columnNames);
     }

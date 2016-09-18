@@ -62,7 +62,7 @@ public class BrokerApiAction extends BaseAction {
         Long userId = Long.valueOf(this.getUserId());
         Long cityId = Long.valueOf(this.getCityId());
 
-        System.out.println("顾问 id: " + brokerId + " 用户 id: " + userId + " 城市 id: " + cityId);
+        System.out.println("顾问接口 action:  顾问 id: " + brokerId + " 用户 id: " + userId + " 城市 id: " + cityId);
 
         // 顾问配盘数据
         List<Map<String, String>> brokerUserMateInventorys = brokerUserMateInventoryService.getBrokerUserMateInventory(brokerId, userId, cityId);

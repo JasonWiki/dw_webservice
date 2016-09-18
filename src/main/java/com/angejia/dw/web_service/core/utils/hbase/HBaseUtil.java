@@ -72,6 +72,8 @@ public class HBaseUtil {
 
     private static final Logger logger = Logger.getLogger(HBaseUtil.class);
 
+    public static final String CLIENT_PORT = "2181";//端口
+    
     // zookeeper 地址
     public String zookeepers;
 
@@ -99,7 +101,9 @@ public class HBaseUtil {
     public Configuration getConfiguration() {
         if (configuration == null) {
             Configuration conf = HBaseConfiguration.create();  
-            conf.set("hbase.zookeeper.quorum", this.getZookeepers());
+            //conf.set("hbase.zookeeper.quorum", this.getZookeepers());
+            conf.set("hbase.zookeeper.quorum", this.getZookeepers());   
+            conf.set("hbase.zookeeper.property.clientPort", CLIENT_PORT);
             configuration = conf;
         }
         return configuration;
