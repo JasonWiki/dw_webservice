@@ -96,8 +96,8 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
         Collections.sort(actionNeeds,new Comparator<Map<String, String>> (){
             @Override
             public int compare(Map<String, String> o1, Map<String, String> o2) {
-              // 升序
-              return Integer.valueOf(o2.get("cnt")) - Integer.valueOf(o1.get("cnt"));
+              // 降序
+              return Integer.parseInt(o2.get("cnt")) - Integer.parseInt(o1.get("cnt"));
             }
         });
 
