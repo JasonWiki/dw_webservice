@@ -108,7 +108,10 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
 
             //System.out.println(tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE) + " - " + cityId + " - " + tagsGroupInfo);
 
-            if (tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE).equals(cityId) == false) continue;
+            if (tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE) == null 
+               || tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE).equals(cityId) == false
+             ) continue;
+            // if (tagsGroupInfo.get(UserTagsEntity.CITY_TAG_CODE).equals(cityId) == false) continue;
 
             result.add(tagsGroupInfo);
         }
