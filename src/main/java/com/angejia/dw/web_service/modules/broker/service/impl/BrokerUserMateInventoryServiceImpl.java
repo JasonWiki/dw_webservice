@@ -161,7 +161,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
             userPortraitSearch.setSearchFrom("user_portrait");
 
-            result.addAll(inventoryService.searchInventoryByEntity(userPortraitSearch, 0, 20));
+            //result.addAll(inventoryService.searchInventoryByEntity(userPortraitSearch, 0, 20));
         }
 
         return result;
