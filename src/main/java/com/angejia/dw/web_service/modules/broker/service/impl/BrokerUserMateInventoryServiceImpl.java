@@ -121,33 +121,41 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
             ProertyInventoryIndexEntity userPortraitSearch = new ProertyInventoryIndexEntity();
 
+            
+            System.out.println("----------");
             // 城市 Id
             if (userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE) != null) {
+                System.out.println(UserTagsEntity.CITY_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE));
                 userPortraitSearch.setCityId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE)) );
             }
 
             // 区域 Id
             if (userPortraitInfo.get(UserTagsEntity.DISTRICT_TAG_CODE) != null) {
+                System.out.println(UserTagsEntity.DISTRICT_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.DISTRICT_TAG_CODE));
                 userPortraitSearch.setDistrictId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.DISTRICT_TAG_CODE)) );
             }
 
             // 版块 Id
             if (userPortraitInfo.get(UserTagsEntity.BLOCK_TAG_CODE) != null) {
+                System.out.println(UserTagsEntity.BLOCK_TAG_CODE + " : "  + userPortraitInfo.get(UserTagsEntity.BLOCK_TAG_CODE));
                 userPortraitSearch.setBlockId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.BLOCK_TAG_CODE)) );
             }
 
             // 小区 Id
             if (userPortraitInfo.get(UserTagsEntity.COMMUNITY_TAG_CODE) != null) {
+                System.out.println(UserTagsEntity.COMMUNITY_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.COMMUNITY_TAG_CODE));
                 userPortraitSearch.setCommunityId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.COMMUNITY_TAG_CODE)) );
             }
 
             // 户型 id
             if (userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE) != null) {
+                System.out.println(UserTagsEntity.BEDROOMS_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE));
                 userPortraitSearch.setBedrooms( Byte.parseByte(userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE)) );
             }
 
             // 价格段 id
             if (userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE) != null) {
+                System.out.println(UserTagsEntity.PRICE_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE));
                 userPortraitSearch.setPriceTier( Byte.parseByte(userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE)) );
             }
 

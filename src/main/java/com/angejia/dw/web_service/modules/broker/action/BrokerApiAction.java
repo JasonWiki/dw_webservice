@@ -73,11 +73,11 @@ public class BrokerApiAction extends BaseAction {
         baseResult.put("userId", this.getUserId());
         baseResult.put("cityId", this.getCityId());
         baseResult.put("total", Integer.toString(brokerUserMateInventorys.size()));
-        
+
         // 推荐实体数据
         Map<String, Object> dataResult = new HashMap<String, Object>();
         dataResult.put("list", brokerUserMateInventorys);
-        
+
         // 组装
         baseResult.put("rec", dataResult);
 
