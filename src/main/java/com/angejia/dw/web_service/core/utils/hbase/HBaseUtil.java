@@ -87,7 +87,7 @@ public class HBaseUtil {
     public HTablePool tablePool;
 
     // 连接池大小
-    private static final int poolsize = 100;
+    private static final int poolsize = 10;
 
 
     public String getZookeepers() {
@@ -130,9 +130,9 @@ public class HBaseUtil {
 
 
     public HTablePool getTablePool() {
-        if (tablePool == null) {
+        //if (tablePool == null) {
             tablePool = new HTablePool(this.getConfiguration(), poolsize);
-        }
+        //}
         return tablePool;
     }
     public void setTablePool(HTablePool tablePool) {
