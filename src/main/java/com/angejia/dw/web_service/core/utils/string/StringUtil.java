@@ -118,7 +118,7 @@ public class StringUtil {
 
 
     /**
-     * string[] 数组转换为 byte[]
+     * String[] 数组转换为 byte[]
      * @param str
      * @return
      */

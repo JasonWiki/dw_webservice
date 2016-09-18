@@ -90,7 +90,7 @@ public class PropertyInventoryIndexDaoImpl extends BaseDaoHibernate4<ProertyInve
         if ( entity.getBedroomsIds() != null && entity.getBedroomsIds().length != 0 ) {  // 多个户型
             criteria.add( Restrictions.in( "bedrooms",  entity.getBedroomsIds() ) ); 
         } else if (entity.getBedrooms() != null) {    // 单个 户型
-            criteria.add( Restrictions.eq("bedrooms", entity.getCommunityId()) );
+            criteria.add( Restrictions.eq("bedrooms", entity.getBedrooms()) );
         }
 
         // 价格段

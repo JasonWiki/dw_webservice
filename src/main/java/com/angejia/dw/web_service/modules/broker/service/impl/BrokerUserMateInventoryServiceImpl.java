@@ -149,16 +149,16 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
             // 户型 id
             if (userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE) != null) {
                 System.out.println(UserTagsEntity.BEDROOMS_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE));
-                //userPortraitSearch.setBedrooms( Byte.parseByte(userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE)) );
+                userPortraitSearch.setBedrooms( Byte.parseByte(userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE)) );
             }
 
             // 价格段 id
             if (userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE) != null) {
                 System.out.println(UserTagsEntity.PRICE_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE));
-                //userPortraitSearch.setPriceTier( Byte.parseByte(userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE)) );
+                userPortraitSearch.setPriceTier( Byte.parseByte(userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE)) );
             }
 
-            userPortraitSearch.setSearchFrom("user_portrait");
+            userPortraitSearch.setSearchFrom("user_portrait_" + String.valueOf(i));
 
             result.addAll(inventoryService.searchInventoryByEntity(userPortraitSearch, 0, 20));
         }

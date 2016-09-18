@@ -22,7 +22,7 @@ public class UserPortraitDaoImpl extends HBaseUtil implements UserPortraitDao  {
     private Properties commonProperties;
 
     public void init() {
-        System.out.println("zookeeper: " + commonProperties.getProperty("hadoop.zookeepers"));
+        //System.out.println("zookeeper: " + commonProperties.getProperty("hadoop.zookeepers"));
         // 设置 zookeeper 地址
         super.setZookeepers(commonProperties.getProperty("hadoop.zookeepers"));
     }
