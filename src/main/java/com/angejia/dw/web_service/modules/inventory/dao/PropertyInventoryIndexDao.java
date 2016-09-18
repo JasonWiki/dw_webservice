@@ -9,7 +9,7 @@ import com.angejia.dw.web_service.modules.entity.dw.dw_service.ProertyInventoryI
 /**
  * @author Jason
  */
-public interface ProertyInventoryIndexDao extends BaseDao<ProertyInventoryIndexEntity> {
+public interface PropertyInventoryIndexDao extends BaseDao<ProertyInventoryIndexEntity> {
     
     public List<ProertyInventoryIndexEntity> getInventorysByEntity(ProertyInventoryIndexEntity entity, Integer offset, Integer limit);
 }

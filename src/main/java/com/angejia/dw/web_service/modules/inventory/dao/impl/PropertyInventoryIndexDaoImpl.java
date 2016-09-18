@@ -15,7 +15,7 @@ import com.angejia.dw.web_service.core.utils.string.StringUtil;
 import com.angejia.dw.web_service.core.base.dao.impl.BaseDaoHibernate4;
 import com.angejia.dw.web_service.core.base.dao.DataSourceSessionFactory;
 
-import com.angejia.dw.web_service.modules.inventory.dao.ProertyInventoryIndexDao;
+import com.angejia.dw.web_service.modules.inventory.dao.PropertyInventoryIndexDao;
 import com.angejia.dw.web_service.modules.entity.dw.dw_service.ProertyInventoryIndexEntity;
 
 
@@ -23,10 +23,10 @@ import com.angejia.dw.web_service.modules.entity.dw.dw_service.ProertyInventoryI
 @Repository("proertyInventoryIndexDao")
 //spring 整理注入, 必须开启事物
 @Transactional("dwDataTransactionManager")
-public class ProertyInventoryIndexDaoImpl extends BaseDaoHibernate4<ProertyInventoryIndexEntity> implements ProertyInventoryIndexDao {
+public class PropertyInventoryIndexDaoImpl extends BaseDaoHibernate4<ProertyInventoryIndexEntity> implements PropertyInventoryIndexDao {
 
 
-    private static final Logger logger = Logger.getLogger(ProertyInventoryIndexDaoImpl.class);
+    private static final Logger logger = Logger.getLogger(PropertyInventoryIndexDaoImpl.class);
 
     /**
      * 配置数据源

@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 
 import com.angejia.dw.web_service.modules.inventory.service.InventoryService;
 import com.angejia.dw.web_service.modules.entity.dw.dw_service.ProertyInventoryIndexEntity;
-import com.angejia.dw.web_service.modules.inventory.dao.ProertyInventoryIndexDao;
+import com.angejia.dw.web_service.modules.inventory.dao.PropertyInventoryIndexDao;
 
 @Service("inventoryService")
 public class InventoryServiceImpl implements InventoryService{
 
     @Autowired
-    private ProertyInventoryIndexDao proertyInventoryIndexDao;
+    private PropertyInventoryIndexDao proertyInventoryIndexDao;
 
     public List<Map<String, String>> searchInventoryByEntity(ProertyInventoryIndexEntity entity, Integer offset, Integer limit) {
 
