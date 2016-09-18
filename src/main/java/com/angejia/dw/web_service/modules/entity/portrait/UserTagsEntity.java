@@ -15,6 +15,8 @@ public class UserTagsEntity {
     
     // 标签组
     public static final String ACTION_NEEDS_CODE = "actionNeeds";
+    public static final String TAG_GROUP_SCORE = "score";   // 标签组分数
+    public static final String TAG_GROUP_CNT = "cnt";       // 标签组次数
 
     // 户型 映射
     public static Map<String, String> BEDROOMS_MAP = new HashMap<String, String>() {

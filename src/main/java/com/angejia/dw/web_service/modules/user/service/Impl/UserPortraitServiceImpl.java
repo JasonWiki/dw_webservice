@@ -88,8 +88,8 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
             }
 
             // 分数相乘
-            Integer tagsScoreTotal =  curTagGroupScore * Integer.valueOf(tagsGroupInfo.get("cnt"));
-            tagsGroupInfo.put("score", tagsScoreTotal.toString());
+            Integer tagsScoreTotal =  curTagGroupScore * Integer.valueOf(tagsGroupInfo.get(UserTagsEntity.TAG_GROUP_CNT));
+            tagsGroupInfo.put(UserTagsEntity.TAG_GROUP_SCORE, tagsScoreTotal.toString());
         }
 
         // 按照分数排序
@@ -97,7 +97,7 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
             @Override
             public int compare(Map<String, String> o1, Map<String, String> o2) {
               // 降序
-              return Integer.parseInt(o2.get("score")) - Integer.parseInt(o1.get("score"));
+              return Integer.parseInt(o2.get(UserTagsEntity.TAG_GROUP_SCORE)) - Integer.parseInt(o1.get(UserTagsEntity.TAG_GROUP_SCORE));
             }
         });
 
@@ -119,7 +119,6 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
         //System.out.println(actionNeeds.size() + " :" + actionNeeds);
         //System.out.println(result.size() + " :" + result);
 
-        
         return result;
     }
 
