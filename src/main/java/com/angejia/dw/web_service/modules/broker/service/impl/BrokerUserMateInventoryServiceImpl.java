@@ -175,7 +175,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
      * @return DemandEntity
      */
     public DemandEntity getDemand(Long brokerId, Long userId, Long cityId) {
-        DemandEntity demand = new DemandEntity();
+        DemandEntity demand = null;
 
         // 通过 userId 获取 客户 ID
         BrokerCustomerBindUserEntity brokerCustomerBindUser = brokerCustomerBindUserDao.getCustomerIdByUserId(Integer.valueOf(userId.toString()));
