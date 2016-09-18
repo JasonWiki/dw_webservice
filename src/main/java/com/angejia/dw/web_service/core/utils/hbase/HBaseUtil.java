@@ -130,9 +130,9 @@ public class HBaseUtil {
 
 
     public HTablePool getTablePool() {
-        //if (tablePool == null) {
-        tablePool = new HTablePool(this.getConfiguration(), poolsize);
-        //}
+        if (tablePool == null) {
+            tablePool = new HTablePool(this.getConfiguration(), poolsize);
+        }
         return tablePool;
     }
     public void setTablePool(HTablePool tablePool) {
