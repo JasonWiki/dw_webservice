@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+    <!-- Spring 绑定 productDataSource 数据源配置 -->
+    <bean id="productDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${hibernate.connection.product.driver_class}"/> 
+        <property name="jdbcUrl" value="${hibernate.connection.product.url}"/>
+        <property name="properties"> 
+            <props> 
+                <prop key="user">${hibernate.connection.product.username}</prop>
+                <prop key="password">${hibernate.connection.product.password}</prop>
+            </props> 
+        </property>
+        <property name="testConnectionOnCheckin" value="true" />
+        <property name="idleConnectionTestPeriod" value="300" />
+        <property name="preferredTestQuery" value="SELECT 1" />
+    </bean>
+
+    <!-- Spring 把 productDataSource 数据注入 productDataSessionFactory Session 工厂    -->
+    <bean id="productDataSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <!-- 注入的数据源: 属性名(默认不可修改) dataSource <- productDataSource -->
+        <property name="dataSource" ref="productDataSource" />
+
+        <property name="hibernateProperties">
+            <props>
+                <!-- 创建 session 方式 hibernate4.x 的方式 -->
+                <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+                <prop key="current_session_context_class" >thread</prop>
+                <!-- 设置数据库方言 -->
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <!-- 是否在控制台显示sql -->
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <!-- 是否格式化 sql，优化显示 -->
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <!-- 是否使用注释  --> 
+                <prop key="hibernate.use_sql_comments">true</prop>
+                <!-- 设置自动创建|更新|验证数据库表结构 -->
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <!-- 是否开启二级缓存 -->
+                <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+                <prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
+                <!-- 是否开启查询缓存 -->
+                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>    
+                <!-- 数据库批量查询最大数 -->
+                <prop key="hibernate.jdbc.fetch_size">500</prop>    
+                <!-- 是否自动提交事务 -->
+                <prop key="hibernate.connection.autocommit">true</prop>
+                <!-- 指定 hibernate 在何时释放JDBC连接 -->
+                <prop key="hibernate.connection.release_mode">auto</prop>
+            </props>
+        </property>
+
+        <!-- 配置项目扫描的 product 数据库 entity -->
+        <property name="packagesToScan" value="com.angejia.dw.web_service.modules.entity.product.angejia"/>
+    </bean>
+
+    <!-- 配置 productDataSessionFactory session 工厂事务, 因为 hibernate 与 spring 整合必须开启事物 -->
+    <bean id="productDataTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="productDataSessionFactory" />
+    </bean>
+
+    <!-- 配置注解实现管理事务（cglib：proxy-target-class="true"） -->
+    <tx:annotation-driven transaction-manager="productDataTransactionManager" proxy-target-class="true" />
+    <!-- 使用 注解 annotation 声明 -->
+    <tx:annotation-driven />
+
+    <tx:advice id="txAdvice" transaction-manager="productDataTransactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="*" propagation="REQUIRED" />
+        </tx:attributes>
+    </tx:advice>
+
+
+</beans>

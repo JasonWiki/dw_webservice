@@ -8,9 +8,6 @@
             http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- 定义一个业务逻辑组件，实现类为 MyServiceImp，
-        此处的 id 必须与 Action 的 setter 方法名对应 -->
-    <!-- bean id="ms" class="org.crazyit.app.service.impl.MyServiceImpl"/  -->
 
     <!-- 使用 annotation 注解 --> 
     <context:annotation-config />
@@ -22,12 +19,33 @@
     <context:property-placeholder location="classpath:hibernate/hibernate.properties"/>
 
     <!-- Hibernate 配置管理, 与 applicationContext.xml 同级目录 -->
-    <import resource="applicationContext-persistence.xml" />
+    <import resource="applicationContext-dw.xml" />
+    <import resource="applicationContext-product.xml" />
 
     <!-- 项目公共配置文件 -->
     <bean id="commonProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="location" value="classpath:spring/common.properties" />
     </bean>
+
+
+    <!-- 业务配置 Start  -->
+
+    <!-- productDataSource 数据源注入 spring JDBC 模板 -->
+    <bean id="productJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+        <property name="dataSource" ref="productDataSource"/>
+    </bean>
+
+
+    <!-- 绑定数据源 -->
+    <bean id="dataSourceDao" class="com.angejia.dw.web_service.core.base.dao.DataSourceSessionFactory">
+        <!-- productDataSessionFactory 注入到 DataSourceSessionFactory -->
+        <property name="productDataSessionFactory" ref="productDataSessionFactory" />
+
+        <!-- dwDataSessionFactory 注入到 DataSourceSessionFactory -->
+        <property name="dwDataSessionFactory" ref="dwDataSessionFactory" />
+    </bean>
+
+    <!-- 业务配置 End  -->
 
 
 

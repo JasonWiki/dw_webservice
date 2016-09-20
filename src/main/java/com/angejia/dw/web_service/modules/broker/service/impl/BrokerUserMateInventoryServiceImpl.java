@@ -1,6 +1,7 @@
 package com.angejia.dw.web_service.modules.broker.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +48,9 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
      * 顾问推荐房源
      */
     public List<Map<String, String>> getBrokerUserMateInventory(Long brokerId, Long userId, Long cityId) {
+        
+        // 保存推荐数据
+        List<Map<String, String>> rsResult = new ArrayList<Map<String, String>>();
         // 最终推荐房源数据
         List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 
@@ -89,7 +93,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
             demandCommunitySearch.setSearchFrom("demand_community");
 
             // 搜索房源
-            result.addAll(inventoryService.searchInventoryByEntity(demandCommunitySearch, 0, 20));
+            rsResult.addAll(inventoryService.searchInventoryByEntity(demandCommunitySearch, 0, 20));
 
 
             // 扩展到版块界别搜索
@@ -106,8 +110,9 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
             demandBlockSearch.setSearchFrom("demand_block");
 
             // 搜索房源
-            result.addAll(inventoryService.searchInventoryByEntity(demandBlockSearch, 0, 20));
+            rsResult.addAll(inventoryService.searchInventoryByEntity(demandBlockSearch, 0, 20));
         }
+
 
         //客户画像
         List<Map<String, String>> userPortrait = userPortraitService.getUserPortraitResult(userId.toString(), cityId.toString());
@@ -160,8 +165,28 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
             userPortraitSearch.setSearchFrom("user_portrait_" + String.valueOf(i));
 
-            result.addAll(inventoryService.searchInventoryByEntity(userPortraitSearch, 0, 20));
+            rsResult.addAll(inventoryService.searchInventoryByEntity(userPortraitSearch, 0, 20));
         }
+
+
+        // 重复房源去重
+        Map<String, String> isExistsInventoryIds = new HashMap<String, String>();   // 保存已经存在的房源
+        for( Map<String, String> curMap : rsResult){
+
+            // 当前推荐出来的房源 ID
+            String inventoryId = curMap.get("inventory_id");
+
+            if (inventoryId != null) {
+                // 如果 当前 inventoryRsId key 不存在
+                if (! isExistsInventoryIds.containsKey(inventoryId)) {
+                    // 追加到最终的结果中
+                    result.add(curMap);
+                }
+                isExistsInventoryIds.put(inventoryId, "");
+            }
+        }
+
+        System.out.println("推荐过滤前: " + rsResult.size() + " - 推荐过滤后: " + result.size()) ;
 
         return result;
     }
@@ -193,8 +218,8 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
         return demand;
     }
-    
-    
+
+
     /**
      * 户型 map 替换
      * @param bedroomsIds 户型 ids 
