@@ -19,8 +19,8 @@
     <context:property-placeholder location="classpath:hibernate/hibernate.properties"/>
 
     <!-- Hibernate 配置管理, 与 applicationContext.xml 同级目录 -->
-    <import resource="applicationContext-dw.xml" />
-    <import resource="applicationContext-product.xml" />
+    <import resource="applicationContext-DwDB.xml" />
+    <import resource="applicationContext-ProductDB.xml" />
 
     <!-- 项目公共配置文件 -->
     <bean id="commonProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -30,9 +30,9 @@
 
     <!-- 业务配置 Start  -->
 
-    <!-- productDataSource 数据源注入 spring JDBC 模板 -->
-    <bean id="productJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
-        <property name="dataSource" ref="productDataSource"/>
+    <!-- dwDataSource 数据源注入 spring JDBC 模板 -->
+    <bean id="dwDbJdbc" class="org.springframework.jdbc.core.JdbcTemplate">  
+        <property name="dataSource" ref="dwDataSource"/>
     </bean>
 
 

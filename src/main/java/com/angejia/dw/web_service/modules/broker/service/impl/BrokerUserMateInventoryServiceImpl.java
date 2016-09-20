@@ -1,31 +1,36 @@
 package com.angejia.dw.web_service.modules.broker.service.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// spring 注解
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.angejia.dw.web_service.core.utils.string.StringUtil;
+
+// spring 
+import org.springframework.stereotype.Service;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 
 // service
 import com.angejia.dw.web_service.modules.broker.service.BrokerUserMateInventoryService;
-import com.angejia.dw.web_service.modules.entity.dw.dw_service.PropertyInventoryIndexEntity;
-import com.angejia.dw.web_service.modules.entity.portrait.UserTagsEntity;
-import com.angejia.dw.web_service.modules.entity.product.angejia.BrokerCustomerBindUserEntity;
-import com.angejia.dw.web_service.modules.entity.product.angejia.DemandEntity;
 import com.angejia.dw.web_service.modules.user.service.UserPortraitService;
 import com.angejia.dw.web_service.modules.inventory.service.InventoryService;
 
 // dao
 import com.angejia.dw.web_service.modules.broker.dao.DemandDao;
 import com.angejia.dw.web_service.modules.broker.dao.BrokerCustomerBindUserDao;
+import com.angejia.dw.web_service.modules.inventory.dao.BrokerUserMateInventoryDao;
 
 // entity
 import com.angejia.dw.web_service.modules.entity.portrait.UserTagsEntity;
+import com.angejia.dw.web_service.modules.entity.dw.dm_db.BrokerUserMateInventoryRsEntity;
+import com.angejia.dw.web_service.modules.entity.dw.dw_service.PropertyInventoryIndexEntity;
+import com.angejia.dw.web_service.modules.entity.product.angejia.BrokerCustomerBindUserEntity;
+import com.angejia.dw.web_service.modules.entity.product.angejia.DemandEntity;
 
 
 @Service("brokerUserMateInventoryService")
@@ -43,16 +48,18 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
     @Autowired
     private BrokerCustomerBindUserDao brokerCustomerBindUserDao;
 
+    @Autowired
+    private BrokerUserMateInventoryDao brokerUserMateInventoryDao;
 
     /**
      * 顾问推荐房源
      */
     public List<Map<String, String>> getBrokerUserMateInventory(Long brokerId, Long userId, Long cityId) {
-        
+        // 最终结果
+        List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+
         // 保存推荐数据
         List<Map<String, String>> rsResult = new ArrayList<Map<String, String>>();
-        // 最终推荐房源数据
-        List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 
         // 客户需求
         DemandEntity demand = this.getDemand(brokerId, userId, cityId);
@@ -126,7 +133,8 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
             PropertyInventoryIndexEntity userPortraitSearch = new PropertyInventoryIndexEntity();
 
-            System.out.println("--- 画像标签 index : " + i + " - 分数 : " + userPortraitInfo.get(UserTagsEntity.TAG_GROUP_SCORE) + " ---");
+            //System.out.println("--- 画像标签 index : " + i + " - 分数 : " + userPortraitInfo.get(UserTagsEntity.TAG_GROUP_SCORE) + " ---");
+
             // 城市 Id
             if (userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE) != null) {
                 //System.out.println(UserTagsEntity.CITY_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE));
@@ -183,15 +191,26 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
                     result.add(curMap);
                 }
                 isExistsInventoryIds.put(inventoryId, "");
+
             }
         }
+
+        // 保存推荐效果
+        BrokerUserMateInventoryRsEntity brokerUserMateInventoryRsEntity = new BrokerUserMateInventoryRsEntity();
+        brokerUserMateInventoryRsEntity.setBrokerId( Integer.parseInt(brokerId.toString()) );
+        brokerUserMateInventoryRsEntity.setUserId( Integer.parseInt(userId.toString()) );
+        brokerUserMateInventoryRsEntity.setCityId( Integer.parseInt(cityId.toString()) );
+        brokerUserMateInventoryRsEntity.setRsCnt( result.size() );
+        brokerUserMateInventoryRsEntity.setRsRrom("");
+        brokerUserMateInventoryDao.saveBrokerUserMateInventoryRsByEntity(brokerUserMateInventoryRsEntity);
+        brokerUserMateInventoryRsEntity = null;
 
         System.out.println("推荐过滤前: " + rsResult.size() + " - 推荐过滤后: " + result.size()) ;
 
         return result;
     }
 
- 
+
     /**
      * 获取客户需求
      * @param brokerId
@@ -220,11 +239,14 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
     }
 
 
-    /**
+   /**
      * 户型 map 替换
      * @param bedroomsIds 户型 ids 
-     */
+    */
     public String bedroomsMapping(String bedroomsIds) {
+        
+        if (bedroomsIds == null) return ""; 
+        
         StringBuffer bedroomsBuffer = new StringBuffer();
 
         String[] bedroomsIdsArr = bedroomsIds.split(";");

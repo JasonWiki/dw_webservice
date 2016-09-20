@@ -1,6 +1,5 @@
 package com.angejia.dw.web_service.modules.entity.dw.dw_service;
 
-import java.util.List;
 
 import javax.persistence.Column;
 //注解将一个类声明为一个实体bean(即一个持久化POJO类)

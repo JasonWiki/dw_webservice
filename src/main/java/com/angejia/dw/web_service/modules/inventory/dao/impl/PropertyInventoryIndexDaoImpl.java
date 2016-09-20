@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.angejia.dw.web_service.core.utils.string.StringUtil;
 
 import com.angejia.dw.web_service.core.base.dao.impl.BaseDaoHibernate4;
 import com.angejia.dw.web_service.core.base.dao.DataSourceSessionFactory;

@@ -3,7 +3,6 @@ package com.angejia.dw.web_service.modules.broker.dao.impl;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,17 +37,6 @@ public class DemandDaoImpl extends BaseDaoHibernate4<DemandEntity> implements De
      */
     @Autowired
     private DataSourceSessionFactory dataSourceDao;
-
-
-    @Autowired
-    private JdbcTemplate productJdbc;
-    public JdbcTemplate getProductJdbc() {
-        return productJdbc;
-    }
-    public void setProductJdbc(JdbcTemplate productJdbc) {
-        this.productJdbc = productJdbc;
-    }
-
 
     /**
      * 获取客户需求
