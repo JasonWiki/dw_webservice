@@ -90,6 +90,7 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
             // 分数相乘
             Integer tagsScoreTotal =  curTagGroupScore * Integer.valueOf(tagsGroupInfo.get(UserTagsEntity.TAG_GROUP_CNT));
             tagsGroupInfo.put(UserTagsEntity.TAG_GROUP_SCORE, tagsScoreTotal.toString());
+            tagsGroupInfo.put("userId", rowKey);
         }
 
         // 按照分数排序

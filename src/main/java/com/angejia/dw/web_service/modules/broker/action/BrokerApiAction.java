@@ -67,7 +67,7 @@ public class BrokerApiAction extends BaseAction {
         // 顾问配盘数据
         List<Map<String, String>> brokerUserMateInventorys = brokerUserMateInventoryService.getBrokerUserMateInventory(brokerId, userId, cityId);
 
-        // 外层基本信息
+        // 外层基本信息 
         Map<String, Object> baseResult = new HashMap<String, Object>();
         baseResult.put("brokerId", this.getBrokerId());
         baseResult.put("userId", this.getUserId());
