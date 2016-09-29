@@ -81,6 +81,7 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
                         curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.BEDROOMS_TAG_CODE).get(curTagId));
                         break;
                     case UserTagsEntity.PRICE_TAG_CODE :
+                        System.out.println(tagsScore.get(UserTagsEntity.PRICE_TAG_CODE));
                         curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.PRICE_TAG_CODE).get(curTagId));
                         break;
                     default :
