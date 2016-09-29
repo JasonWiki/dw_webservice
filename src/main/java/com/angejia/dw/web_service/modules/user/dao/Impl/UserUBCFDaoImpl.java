@@ -36,7 +36,7 @@ public class UserUBCFDaoImpl implements UserUBCFDao  {
                 + "LIMIT " + offset + "," + limit;
         //System.out.println(ubcfSql);
 
-        dataSourceDao.getProductDataJdbc().query(ubcfSql, new RowCallbackHandler() {
+        dataSourceDao.getDwDbJdbc().query(ubcfSql, new RowCallbackHandler() {
             @Override
             public void processRow(ResultSet rs) throws SQLException {
 

@@ -67,14 +67,13 @@ public class UserRecommendAction extends BaseAction {
             // UBCF 推荐房源数据
             List<Map<String, String>> userUBCFRecommendInventorys =  userRecommendService.getUserUBCFRecommendInventorys(userId, cityId, 0 , 40);
 
-            // 
             for (int i=0; i <= userPortraitRecommendInventorys.size() -1 ; i++) {
                 Map<String, String> upri =  userPortraitRecommendInventorys.get(i);
 
                 Map<String, String> recMap = new HashMap<String, String>();
                 recMap.put("inventory_rs_id", upri.get("inventory_id"));
-                recMap.put("inventory_rs_pf", upri.get("search_from"));
-                recMap.put("inventory_rs_sort", upri.get("inventory_rs_status"));
+                //recMap.put("inventory_rs_pf", upri.get("search_from"));
+                //recMap.put("inventory_rs_sort", upri.get("inventory_rs_status"));
                 recMap.put("type", "1");
                 recommendInventorys.add(recMap);
             }
@@ -84,8 +83,8 @@ public class UserRecommendAction extends BaseAction {
 
                 Map<String, String> recMap = new HashMap<String, String>();
                 recMap.put("inventory_rs_id", upri.get("inventory_id"));
-                recMap.put("inventory_rs_pf", upri.get("relation_user_pf"));
-                recMap.put("inventory_rs_sort", upri.get("inventory_rs_status"));
+                //recMap.put("inventory_rs_pf", upri.get("relation_user_pf"));
+                //recMap.put("inventory_rs_sort", upri.get("inventory_rs_status"));
                 recMap.put("type", "2");
                 recommendInventorys.add(recMap);
             }
