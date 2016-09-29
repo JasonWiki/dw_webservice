@@ -56,7 +56,6 @@ public class UserPortraitAction extends BaseAction {
         String userIds = this.getUserIds();
         String cityId = this.getCityId();
 
-        
         // 保存用户画像数据
         final List<Map<String, String>> usersPortrait = new ArrayList<Map<String, String>>();
 
@@ -65,7 +64,6 @@ public class UserPortraitAction extends BaseAction {
 
             System.out.println("用户数量: " + userIdsArr.length);
 
-            
 
             // 单个画像
             if (userIdsArr.length == 1) {
@@ -82,9 +80,8 @@ public class UserPortraitAction extends BaseAction {
                 }
             }
 
-            // 推荐数据实体
         }
-
+   
         // 外层基本信息 
         Map<String, Object> baseResult = new HashMap<String, Object>();
         baseResult.put("userId", userIds);
