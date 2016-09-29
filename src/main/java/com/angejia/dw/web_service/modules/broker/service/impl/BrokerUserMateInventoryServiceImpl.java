@@ -11,13 +11,11 @@ import com.angejia.dw.web_service.core.utils.string.StringUtil;
 
 // spring 
 import org.springframework.stereotype.Service;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 // service
 import com.angejia.dw.web_service.modules.broker.service.BrokerUserMateInventoryService;
-import com.angejia.dw.web_service.modules.user.service.UserPortraitService;
+import com.angejia.dw.web_service.modules.user.service.UserRecommendService;
 import com.angejia.dw.web_service.modules.inventory.service.InventoryService;
 
 // dao
@@ -40,10 +38,10 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
     private DemandDao demandDao;
 
     @Autowired
-    private UserPortraitService userPortraitService;
+    private InventoryService inventoryService;
 
     @Autowired
-    private InventoryService inventoryService;
+    private UserRecommendService userRecommendService;
 
     @Autowired
     private BrokerCustomerBindUserDao brokerCustomerBindUserDao;
@@ -61,10 +59,8 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
         // 保存推荐数据
         List<Map<String, String>> rsResult = new ArrayList<Map<String, String>>();
 
-        // 客户需求
+        // 客户需求推荐房源
         DemandEntity demand = this.getDemand(brokerId, userId, cityId);
-        //demand = null;
-
         if (demand != null) {
             System.out.println(
                     "客户需求 id: " + demand.getId() 
@@ -120,62 +116,8 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
             rsResult.addAll(inventoryService.searchInventoryByEntity(demandBlockSearch, 0, 20));
         }
 
-
-        //客户画像
-        List<Map<String, String>> userPortrait = userPortraitService.getUserPortraitResult(userId.toString(), cityId.toString());
-        //System.out.println("用户画像:  数量: " + userPortrait.size() + " - " +  userPortrait);
-
-        for (int i =0; i <= userPortrait.size()-1; i ++) {
-
-            if (i >= 5) break;
-
-            Map<String, String> userPortraitInfo = userPortrait.get(i);
-
-            PropertyInventoryIndexEntity userPortraitSearch = new PropertyInventoryIndexEntity();
-
-            //System.out.println("--- 画像标签 index : " + i + " - 分数 : " + userPortraitInfo.get(UserTagsEntity.TAG_GROUP_SCORE) + " ---");
-
-            // 城市 Id
-            if (userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE) != null) {
-                //System.out.println(UserTagsEntity.CITY_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE));
-                userPortraitSearch.setCityId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE)) );
-            }
-
-            // 区域 Id
-            if (userPortraitInfo.get(UserTagsEntity.DISTRICT_TAG_CODE) != null) {
-                //System.out.println(UserTagsEntity.DISTRICT_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.DISTRICT_TAG_CODE));
-                userPortraitSearch.setDistrictId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.DISTRICT_TAG_CODE)) );
-            }
-
-            // 版块 Id
-            if (userPortraitInfo.get(UserTagsEntity.BLOCK_TAG_CODE) != null) {
-                //System.out.println(UserTagsEntity.BLOCK_TAG_CODE + " : "  + userPortraitInfo.get(UserTagsEntity.BLOCK_TAG_CODE));
-                userPortraitSearch.setBlockId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.BLOCK_TAG_CODE)) );
-            }
-
-            // 小区 Id
-            if (userPortraitInfo.get(UserTagsEntity.COMMUNITY_TAG_CODE) != null) {
-                //System.out.println(UserTagsEntity.COMMUNITY_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.COMMUNITY_TAG_CODE));
-                userPortraitSearch.setCommunityId( Integer.parseInt(userPortraitInfo.get(UserTagsEntity.COMMUNITY_TAG_CODE)) );
-            }
-
-            // 户型 id
-            if (userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE) != null) {
-                //System.out.println(UserTagsEntity.BEDROOMS_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE));
-                userPortraitSearch.setBedrooms( Byte.parseByte(userPortraitInfo.get(UserTagsEntity.BEDROOMS_TAG_CODE)) );
-            }
-
-            // 价格段 id
-            if (userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE) != null) {
-                //System.out.println(UserTagsEntity.PRICE_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE));
-                userPortraitSearch.setPriceTier( Byte.parseByte(userPortraitInfo.get(UserTagsEntity.PRICE_TAG_CODE)) );
-            }
-
-            userPortraitSearch.setSearchFrom("user_portrait_" + String.valueOf(i));
-
-            rsResult.addAll(inventoryService.searchInventoryByEntity(userPortraitSearch, 0, 20));
-        }
-
+        // 客户画像推荐房源
+        rsResult.addAll(userRecommendService.getUserPortraitRecommendInventorys(userId.toString(), cityId.toString()));
 
         // 重复房源去重
         Map<String, String> isExistsInventoryIds = new HashMap<String, String>();   // 保存已经存在的房源
