@@ -66,34 +66,33 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
                 // 根据出现的标签加分
                 switch(curTagCode) {
                     case UserTagsEntity.CITY_TAG_CODE :
-                        if (tagsScore.get(UserTagsEntity.CITY_TAG_CODE) != null) {
+                        if (tagsScore.get(UserTagsEntity.CITY_TAG_CODE).get(curTagId) != null) {
                             curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.CITY_TAG_CODE).get(curTagId));
                         }
                         break;
                     case UserTagsEntity.DISTRICT_TAG_CODE :
-                        if (tagsScore.get(UserTagsEntity.DISTRICT_TAG_CODE) != null) {
+                        if (tagsScore.get(UserTagsEntity.DISTRICT_TAG_CODE).get(curTagId) != null) {
                             curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.DISTRICT_TAG_CODE).get(curTagId));
                         }
                         break;
                     case UserTagsEntity.BLOCK_TAG_CODE :
-                        if (tagsScore.get(UserTagsEntity.BLOCK_TAG_CODE) != null) {
+                        if (tagsScore.get(UserTagsEntity.BLOCK_TAG_CODE).get(curTagId) != null) {
                             curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.BLOCK_TAG_CODE).get(curTagId));
                         }
                         break;
                     case UserTagsEntity.COMMUNITY_TAG_CODE :
-                        if (tagsScore.get(UserTagsEntity.COMMUNITY_TAG_CODE) != null) {
+                        if (tagsScore.get(UserTagsEntity.COMMUNITY_TAG_CODE).get(curTagId) != null) {
                             curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.COMMUNITY_TAG_CODE).get(curTagId));
                         }
                         break;
                     case UserTagsEntity.BEDROOMS_TAG_CODE :
-                        if (tagsScore.get(UserTagsEntity.BEDROOMS_TAG_CODE) != null) {
+                        if (tagsScore.get(UserTagsEntity.BEDROOMS_TAG_CODE).get(curTagId) != null) {
                             curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.BEDROOMS_TAG_CODE).get(curTagId));
                         }
                         break;
                     case UserTagsEntity.PRICE_TAG_CODE :
-                        if (tagsScore.get(UserTagsEntity.PRICE_TAG_CODE) != null) {
-                            System.out.println(tagsScore.get(UserTagsEntity.PRICE_TAG_CODE).get(curTagId));
-                            //curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.PRICE_TAG_CODE).get(curTagId));
+                        if (tagsScore.get(UserTagsEntity.PRICE_TAG_CODE).get(curTagId) != null) {
+                            curTagGroupScore += Integer.valueOf(tagsScore.get(UserTagsEntity.PRICE_TAG_CODE).get(curTagId));
                         }
                         break;
                     default :
