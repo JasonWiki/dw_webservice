@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface UserRecommendService {
 
-    public List<Map<String, String>> getUserPortraitRecommendInventorys(String userId, String cityId);
+    public List<Map<String, String>> getUserPortraitRecommendInventorys(String userId, String cityId, Integer offset, Integer limit);
     
-    public List<Map<String, String>> getUserUBCFRecommendInventorys(String userId, String cityId);
+    public List<Map<String, String>> getUserUBCFRecommendInventorys(String userId, String cityId, Integer offset, Integer limit);
 }

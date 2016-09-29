@@ -34,6 +34,11 @@
     <bean id="dwDbJdbc" class="org.springframework.jdbc.core.JdbcTemplate">  
         <property name="dataSource" ref="dwDataSource"/>
     </bean>
+ 
+    <!-- productDataSource 数据源注入 spring JDBC 模板 -->
+    <bean id="productDataJdbc" class="org.springframework.jdbc.core.JdbcTemplate">  
+        <property name="dataSource" ref="productDataSource"/>
+    </bean>
 
 
     <!-- 绑定数据源 -->
@@ -43,6 +48,12 @@
 
         <!-- dwDataSessionFactory 注入到 DataSourceSessionFactory -->
         <property name="dwDataSessionFactory" ref="dwDataSessionFactory" />
+
+        <!-- spring  dwDbJdbc 注入到 DataSourceSessionFactory -->
+        <property name="dwDbJdbc" ref="dwDbJdbc" />
+
+        <!-- spring productDataJdbc 注入到 DataSourceSessionFactory -->
+        <property name="productDataJdbc" ref="productDataJdbc" />
     </bean>
 
     <!-- 业务配置 End  -->

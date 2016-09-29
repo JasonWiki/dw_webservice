@@ -2,36 +2,41 @@ package com.angejia.dw.web_service.modules.user.service.Impl;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.angejia.dw.web_service.core.utils.hbase.HBaseUtil;
 
 import com.angejia.dw.web_service.modules.user.service.UserPortraitService;
 import com.angejia.dw.web_service.modules.user.service.UserRecommendService;
 import com.angejia.dw.web_service.modules.inventory.service.InventoryService;
 
+import com.angejia.dw.web_service.modules.user.dao.UserUBCFDao;
+import com.angejia.dw.web_service.core.utils.array.ListUtil;
 import com.angejia.dw.web_service.modules.entity.dw.dw_service.PropertyInventoryIndexEntity;
 import com.angejia.dw.web_service.modules.entity.portrait.UserTagsEntity;
 
 
 @Service("userRecommendService")
-public class UserRecommendServiceImpl extends HBaseUtil implements UserRecommendService {
+public class UserRecommendServiceImpl implements UserRecommendService {
 
     @Autowired
     private UserPortraitService userPortraitService;
 
-
     @Autowired
     private InventoryService inventoryService;
+
+    @Autowired
+    private UserUBCFDao userUBCFDao;
 
     /**
      * 获取用户画像推荐房源年数据
      */
-    public List<Map<String, String>> getUserPortraitRecommendInventorys( String userId, String cityId) {
+    public List<Map<String, String>> getUserPortraitRecommendInventorys( String userId, String cityId, Integer offset, Integer limit) {
+
+        // 最终结果
+        List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 
         // 保存推荐数据
         List<Map<String, String>> rsResult = new ArrayList<Map<String, String>>();
@@ -88,22 +93,41 @@ public class UserRecommendServiceImpl extends HBaseUtil implements UserRecommend
 
             userPortraitSearch.setSearchFrom("user_portrait_" + String.valueOf(i));
 
-            rsResult.addAll(inventoryService.searchInventoryByEntity(userPortraitSearch, 0, 20));
+            rsResult.addAll(inventoryService.searchInventoryByEntity(userPortraitSearch, offset, limit));
         }
 
+        // 去重房源
+        result = ListUtil.listMapValDistinct(rsResult, "inventory_id");
+/*
+        // 重复房源去重
+        Map<String, String> isExistsInventoryIds = new HashMap<String, String>();   // 保存已经存在的房源
+        for( Map<String, String> curMap : rsResult){
 
-        return rsResult;
+            // 当前推荐出来的房源 ID
+            String inventoryId = curMap.get("inventory_id");
+
+            if (inventoryId != null) {
+                // 如果 当前 inventoryRsId key 不存在
+                if (! isExistsInventoryIds.containsKey(inventoryId)) {
+                    // 追加到最终的结果中
+                    result.add(curMap);
+                }
+                isExistsInventoryIds.put(inventoryId, "");
+
+            }
+        }
+*/
+
+        return result;
     }
 
 
     /**
      * 获取 UBCF 推荐的房源数据
      */
-    public List<Map<String, String>> getUserUBCFRecommendInventorys(String userId, String cityId) {
-     // 保存推荐数据
-        List<Map<String, String>> rsResult = new ArrayList<Map<String, String>>();
-        
-        return rsResult;
+    public List<Map<String, String>> getUserUBCFRecommendInventorys(String userId, String cityId, Integer offset, Integer limit) {
+
+        return userUBCFDao.getUserCBCFRecommendInventorys(userId, cityId, offset, limit);
     }
 
 }

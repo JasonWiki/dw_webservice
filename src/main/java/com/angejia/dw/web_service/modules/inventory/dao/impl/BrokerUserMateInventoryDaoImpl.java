@@ -4,22 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.angejia.dw.web_service.modules.inventory.dao.BrokerUserMateInventoryDao;
+import com.angejia.dw.web_service.core.base.dao.DataSourceSessionFactory;
 
+import com.angejia.dw.web_service.modules.inventory.dao.BrokerUserMateInventoryDao;
 import com.angejia.dw.web_service.modules.entity.dw.dm_db.BrokerUserMateInventoryRsEntity;
 
 @Repository("brokerUserMateInventoryDao")
 public class BrokerUserMateInventoryDaoImpl implements BrokerUserMateInventoryDao{
 
     @Autowired
-    private JdbcTemplate productDbJdbc;
-    public JdbcTemplate getProductDbJdbc() {
-        return productDbJdbc;
-    }
-    public void setProductDbJdbc(JdbcTemplate productDbJdbc) {
-        this.productDbJdbc = productDbJdbc;
-    }
-
+    private DataSourceSessionFactory dataSourceDao;
 
     /**
      * 保存推荐效果
@@ -37,7 +31,7 @@ public class BrokerUserMateInventoryDaoImpl implements BrokerUserMateInventoryDa
 
         Object[] params = new Object[]{entity.getBrokerId(), entity.getUserId(), entity.getCityId(), entity.getRsCnt(), entity.getRsRrom() };
 
-        return productDbJdbc.update(sqlStr, params);
+        return dataSourceDao.getDwDbJdbc().update(sqlStr, params);
 
     }
   

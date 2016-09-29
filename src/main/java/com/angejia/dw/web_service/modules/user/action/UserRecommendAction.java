@@ -20,7 +20,7 @@ import org.springframework.stereotype.Controller;
 import com.angejia.dw.web_service.core.base.action.BaseAction;
 
 // Service
-import com.angejia.dw.web_service.modules.user.service.UserPortraitService;
+import com.angejia.dw.web_service.modules.user.service.UserRecommendService;
 
 @Controller("userRecommendAction")
 
@@ -43,7 +43,7 @@ public class UserRecommendAction extends BaseAction {
 
 
     @Autowired
-    private UserPortraitService userPortraitService;
+    private UserRecommendService userRecommendService;
 
     // 保存用户推荐房源数据
     private Map<String, Object> userRecommendInventorys = new HashMap<String, Object>();
@@ -54,38 +54,24 @@ public class UserRecommendAction extends BaseAction {
     public String userRecommendInventorys() {
 
         // 拆解 用户 ids
-        String userIds = this.getUserId();
+        String userId = this.getUserId();
         String cityId = this.getCityId();
 
         // 保存用户画像数据
         final List<Map<String, String>> recommendInventorys = new ArrayList<Map<String, String>>();
 
-        if (userIds != null && cityId != null) {
-            String[] userIdsArr = userIds.split(",");
+        if (userId != null && cityId != null) {
+            // 客户画像推荐房源
+            List<Map<String, String>> userPortraitRecommendInventorys = userRecommendService.getUserPortraitRecommendInventorys(userId, cityId, 0 ,20);
 
-            System.out.println("用户数量: " + userIdsArr.length);
-
-
-            // 单个画像
-            if (userIdsArr.length == 1) {
-                List<Map<String, String>> userPortrait = userPortraitService.getUserPortraitResult(userIdsArr[0], cityId);
-                recommendInventorys.addAll(userPortrait);
-
-            // 批量画像
-            } else if(userIdsArr.length > 1) {
-                for (String userId: userIdsArr) {
-                    List<Map<String, String>> userPortrait =  userPortraitService.getUserPortraitResult(userId, cityId);
-                    if (userPortrait.isEmpty() == false && userPortrait.size() > 0) {
-                        recommendInventorys.add(userPortrait.get(0));
-                    }
-                }
-            }
+            // UBCF 推荐房源数据
+            List<Map<String, String>> userUBCFRecommendInventorys =  userRecommendService.getUserUBCFRecommendInventorys(userId, cityId, 0 , 40);
 
         }
    
         // 外层基本信息 
         Map<String, Object> baseResult = new HashMap<String, Object>();
-        baseResult.put("userId", userIds);
+        baseResult.put("userId", userId);
         baseResult.put("cityId", cityId);
         baseResult.put("total", Integer.toString(recommendInventorys.size()));
         baseResult.put("rec", new HashMap<String, Object>() {

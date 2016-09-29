@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.angejia.dw.web_service.core.utils.array.ListUtil;
 import com.angejia.dw.web_service.core.utils.string.StringUtil;
 
 // spring 
@@ -117,8 +118,9 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
         }
 
         // 客户画像推荐房源
-        rsResult.addAll(userRecommendService.getUserPortraitRecommendInventorys(userId.toString(), cityId.toString()));
+        rsResult.addAll(userRecommendService.getUserPortraitRecommendInventorys(userId.toString(), cityId.toString(), 0 ,20) );
 
+        /*
         // 重复房源去重
         Map<String, String> isExistsInventoryIds = new HashMap<String, String>();   // 保存已经存在的房源
         for( Map<String, String> curMap : rsResult){
@@ -136,6 +138,9 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
             }
         }
+        */
+        // 房源去重
+        result = ListUtil.listMapValDistinct(rsResult, "inventory_id");
 
         // 保存推荐效果
         BrokerUserMateInventoryRsEntity brokerUserMateInventoryRsEntity = new BrokerUserMateInventoryRsEntity();
