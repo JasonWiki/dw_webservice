@@ -98,25 +98,6 @@ public class UserRecommendServiceImpl implements UserRecommendService {
 
         // 去重房源
         result = ListUtil.listMapValDistinct(rsResult, "inventory_id");
-/*
-        // 重复房源去重
-        Map<String, String> isExistsInventoryIds = new HashMap<String, String>();   // 保存已经存在的房源
-        for( Map<String, String> curMap : rsResult){
-
-            // 当前推荐出来的房源 ID
-            String inventoryId = curMap.get("inventory_id");
-
-            if (inventoryId != null) {
-                // 如果 当前 inventoryRsId key 不存在
-                if (! isExistsInventoryIds.containsKey(inventoryId)) {
-                    // 追加到最终的结果中
-                    result.add(curMap);
-                }
-                isExistsInventoryIds.put(inventoryId, "");
-
-            }
-        }
-*/
 
         return result;
     }

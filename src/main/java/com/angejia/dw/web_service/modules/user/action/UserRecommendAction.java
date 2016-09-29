@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.angejia.dw.web_service.core.base.action.BaseAction;
-
+import com.angejia.dw.web_service.core.utils.array.ListUtil;
 // Service
 import com.angejia.dw.web_service.modules.user.service.UserRecommendService;
 
@@ -58,7 +58,7 @@ public class UserRecommendAction extends BaseAction {
         String cityId = this.getCityId();
 
         // 保存用户画像数据
-        final List<Map<String, String>> recommendInventorys = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> recommendInventorys = new ArrayList<Map<String, String>>();
 
         if (userId != null && cityId != null) {
             // 客户画像推荐房源
@@ -67,8 +67,35 @@ public class UserRecommendAction extends BaseAction {
             // UBCF 推荐房源数据
             List<Map<String, String>> userUBCFRecommendInventorys =  userRecommendService.getUserUBCFRecommendInventorys(userId, cityId, 0 , 40);
 
+            // 
+            for (int i=0; i <= userPortraitRecommendInventorys.size() -1 ; i++) {
+                Map<String, String> upri =  userPortraitRecommendInventorys.get(i);
+
+                Map<String, String> recMap = new HashMap<String, String>();
+                recMap.put("inventory_rs_id", upri.get("inventory_id"));
+                recMap.put("inventory_rs_pf", upri.get("search_from"));
+                recMap.put("inventory_rs_sort", upri.get("inventory_rs_status"));
+                recMap.put("type", "1");
+                recommendInventorys.add(recMap);
+            }
+
+            for (int i=0; i <= userUBCFRecommendInventorys.size() -1 ; i++) {
+                Map<String, String> upri =  userUBCFRecommendInventorys.get(i);
+
+                Map<String, String> recMap = new HashMap<String, String>();
+                recMap.put("inventory_rs_id", upri.get("inventory_id"));
+                recMap.put("inventory_rs_pf", upri.get("relation_user_pf"));
+                recMap.put("inventory_rs_sort", upri.get("inventory_rs_status"));
+                recMap.put("type", "2");
+                recommendInventorys.add(recMap);
+            }
+
         }
-   
+
+        // 房源去重
+        final List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+        result.addAll(ListUtil.listMapValDistinct(recommendInventorys, "inventory_rs_id"));
+
         // 外层基本信息 
         Map<String, Object> baseResult = new HashMap<String, Object>();
         baseResult.put("userId", userId);
@@ -76,7 +103,7 @@ public class UserRecommendAction extends BaseAction {
         baseResult.put("total", Integer.toString(recommendInventorys.size()));
         baseResult.put("rec", new HashMap<String, Object>() {
             {
-                put("list", recommendInventorys);  
+                put("list", result);  
             }
         } );
 

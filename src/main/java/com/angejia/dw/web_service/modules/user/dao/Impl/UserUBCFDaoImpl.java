@@ -41,7 +41,7 @@ public class UserUBCFDaoImpl implements UserUBCFDao  {
             public void processRow(ResultSet rs) throws SQLException {
 
                 Map<String, String> recMap = new HashMap<String, String>();
-                recMap.put("inventory_rs_id", rs.getString("recommend_item_id"));
+                recMap.put("inventory_id", rs.getString("recommend_item_id"));
                 recMap.put("relation_user_pf", rs.getString("relation_user_pf"));
                 recMap.put("inventory_rs_pf", rs.getString("recommend_item_pf"));
                 recMap.put("inventory_rs_status", rs.getString("inventory_rs_status"));
