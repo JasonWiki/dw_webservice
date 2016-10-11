@@ -117,8 +117,8 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
             rsResult.addAll(inventoryService.searchInventoryByEntity(demandBlockSearch, 0, 20));
         }
 
-        // 客户画像推荐房源
-        rsResult.addAll(userRecommendService.getUserPortraitRecommendInventorys(userId.toString(), cityId.toString(), 0 ,20) );
+        // 用户 CBCF 推荐房源数据
+        rsResult.addAll(userRecommendService.getUserCBCFRecommendInventorys(userId.toString(), cityId.toString(), 100) );
 
         // 房源去重
         result = ListUtil.listMapValDistinct(rsResult, "inventory_id");
