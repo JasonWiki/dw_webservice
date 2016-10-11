@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,15 +40,15 @@ public class UserPushServiceImpl implements UserPushService {
 
             Integer offset = IntegerUtil.generateRandom(0, 3);
             // 搜索推荐数据
-            List<Map<String, String>> rsInventorys =  userRecommendService.getRecommendInventorysByTags(topOneUserPortrait, "push" ,offset, 3);
+            List<Map<String, String>> rsInventorys =  userRecommendService.getRecommendInventorysByTags(topOneUserPortrait, "push" ,0, 3);
 
-            StringBuffer inventoryIds = new StringBuffer();
+            List inventoryIds = new ArrayList<String>();
             for( Map<String, String> curMap : rsInventorys){
                 String inventoryId = curMap.get("inventory_id");
-                inventoryIds.append(inventoryId);
+                inventoryIds.add(inventoryId);
             }
 
-            result.put("inventorys", inventoryIds.toString());
+            result.put("inventorys", StringUtils.join(inventoryIds,",") );
         }
 
         return result;
