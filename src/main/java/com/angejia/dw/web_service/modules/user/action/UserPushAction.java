@@ -62,13 +62,17 @@ public class UserPushAction extends BaseAction {
             // 单个画像
             if (userIdsArr.length == 1) {
                 Map<String, String> pushInfo = userPushService.getUserInfoByUserId(userIdsArr[0], cityId, 3);
-                data.add(pushInfo);
+                if ( !pushInfo.isEmpty() ) {
+                    data.add(pushInfo);
+                }
 
             // 批量画像
             } else if(userIdsArr.length > 1) {
                 for (String userId: userIdsArr) {
                     Map<String, String> pushInfo = userPushService.getUserInfoByUserId(userId, cityId, 3);
-                    data.add(pushInfo);
+                    if ( !pushInfo.isEmpty() ) {
+                        data.add(pushInfo);
+                    }
                 }
             }
         }

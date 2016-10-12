@@ -37,7 +37,7 @@ public class UserPortraitServiceImpl extends HBaseUtil implements UserPortraitSe
      * @return  List<Map<标签名, 标签 ID>>
      */
     public List<Map<String, String>> getUserPortraitResult(String rowKey, String cityId) {
-        System.out.println("用户画像 Service: rowKey - " + rowKey + " cityId - " + cityId);
+        //System.out.println("用户画像 Service: rowKey - " + rowKey + " cityId - " + cityId);
 
         List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 

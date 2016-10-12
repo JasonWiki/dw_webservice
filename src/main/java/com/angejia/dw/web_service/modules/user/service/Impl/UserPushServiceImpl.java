@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.angejia.dw.web_service.core.utils.number.IntegerUtil;
+
 import com.angejia.dw.web_service.modules.user.service.UserPortraitService;
 import com.angejia.dw.web_service.modules.user.service.UserPushService;
 import com.angejia.dw.web_service.modules.user.service.UserRecommendService;
@@ -32,23 +33,57 @@ public class UserPushServiceImpl implements UserPushService {
         Map<String, String> result = new HashMap<String, String>();
 
         // 获取客户画像
-        List<Map<String, String>> userPortraitRs = userPortraitService.getUserPortraitResult(userId, cityId);
-        if ( !userPortraitRs.isEmpty() ) {
-            // 排名第一的客户画像
-            Map<String, String> topOneUserPortrait  = userPortraitRs.get(0);
-            result.putAll(topOneUserPortrait);
+        List<Map<String, String>> userPortraitList = userPortraitService.getUserPortraitResult(userId, cityId);
 
-            Integer offset = IntegerUtil.generateRandom(0, 3);
-            // 搜索推荐数据
-            List<Map<String, String>> rsInventorys =  userRecommendService.getRecommendInventorysByTags(topOneUserPortrait, "push" ,0, 3);
+        if ( !userPortraitList.isEmpty() ) {
+            // 遍历画像
+            for (int i = 0; i <= userPortraitList.size() - 1; i ++) {
 
-            List inventoryIds = new ArrayList<String>();
-            for( Map<String, String> curMap : rsInventorys){
-                String inventoryId = curMap.get("inventory_id");
-                inventoryIds.add(inventoryId);
+                if (i > 5) break;
+
+                // 当前画像
+                Map<String, String> userPortrait  = userPortraitList.get(i);
+
+                String userPortraitSortPoint = "push_user_portrait_sort_" + i;
+
+                // 搜索推荐房源
+                List<Map<String, String>> rsInventorys = userRecommendService.getRecommendInventorysByTags(userPortrait, userPortraitSortPoint, 0, limit + 20);
+
+                // 当前画像搜索到的房源条数
+                Integer rsInventorysSize = rsInventorys.size();
+
+                if (rsInventorysSize > 0) {
+
+                    Integer fromIndex = 0;
+                    Integer toIndex = 1;
+
+                    if ( rsInventorysSize <= limit) {
+                        fromIndex = 0;
+                        toIndex = rsInventorysSize - 1;
+                    } else {
+                        // 随机抽取 limit 条房源数据返回
+                        fromIndex = IntegerUtil.generateRandom(0 , (rsInventorysSize - 1) - limit );
+                        toIndex = fromIndex + limit ;
+                    }
+
+                    // 截取一段范围的房源数据
+                    List<Map<String, String>>  rangeInventorys = rsInventorys.subList(fromIndex, toIndex);
+
+                    // 加载当前客户画像
+                    result.putAll(userPortrait);
+
+                    List inventoryIds = new ArrayList<String>();
+                    for( Map<String, String> curMap : rangeInventorys){
+                        String inventoryId = curMap.get("inventory_id");
+                        inventoryIds.add(inventoryId);
+                    }
+
+                    result.put("inventorys", StringUtils.join(inventoryIds,",") );
+                    result.put("userPortraitSortPoint", userPortraitSortPoint);
+                    break;
+                } 
             }
 
-            result.put("inventorys", StringUtils.join(inventoryIds,",") );
         }
 
         return result;
