@@ -39,7 +39,7 @@ public class UserPushServiceImpl implements UserPushService {
             // 遍历画像
             for (int i = 0; i <= userPortraitList.size() - 1; i ++) {
 
-                if (i > 5) break;
+                //if (i > 5) break;
 
                 // 当前画像
                 Map<String, String> userPortrait  = userPortraitList.get(i);
@@ -59,15 +59,16 @@ public class UserPushServiceImpl implements UserPushService {
 
                     if ( rsInventorysSize <= limit) {
                         fromIndex = 0;
-                        toIndex = rsInventorysSize - 1;
+                        toIndex = rsInventorysSize - 0;
                     } else {
                         // 随机抽取 limit 条房源数据返回
-                        fromIndex = IntegerUtil.generateRandom(0 , (rsInventorysSize - 1) - limit );
+                        fromIndex = IntegerUtil.generateRandom(0 , (rsInventorysSize - 0) - limit );
                         toIndex = fromIndex + limit ;
                     }
 
                     // 截取一段范围的房源数据
-                    List<Map<String, String>>  rangeInventorys = rsInventorys.subList(fromIndex, toIndex);
+                    //List<Map<String, String>>  rangeInventorys = rsInventorys.subList(fromIndex, toIndex);
+                    List<Map<String, String>>  rangeInventorys = rsInventorys;
 
                     // 加载当前客户画像
                     result.putAll(userPortrait);
