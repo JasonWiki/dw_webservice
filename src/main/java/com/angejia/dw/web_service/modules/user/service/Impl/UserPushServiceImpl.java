@@ -59,10 +59,10 @@ public class UserPushServiceImpl implements UserPushService {
 
                     if ( rsInventorysSize <= limit) {
                         fromIndex = 0;
-                        toIndex = rsInventorysSize - 0;
+                        toIndex = rsInventorysSize;
                     } else {
                         // 随机抽取 limit 条房源数据返回
-                        fromIndex = IntegerUtil.generateRandom(0 , (rsInventorysSize - 0) - limit );
+                        fromIndex = IntegerUtil.generateRandom(0 , rsInventorysSize - limit );
                         toIndex = fromIndex + limit ;
                     }
 
