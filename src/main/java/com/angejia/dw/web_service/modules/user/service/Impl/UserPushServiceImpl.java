@@ -51,20 +51,25 @@ public class UserPushServiceImpl implements UserPushService {
 
                 // 当前画像搜索到的房源条数
                 Integer rsInventorysSize = rsInventorys.size();
-
-                if (rsInventorysSize > 0) {
+                // 候选房源最大选取条数
+                Integer maxRsInventorysNum = limit * 2;
+ 
+                if (rsInventorysSize >= maxRsInventorysNum ) {
 
                     Integer fromIndex = 0;
-                    Integer toIndex = 1;
+                    Integer toIndex = limit;
 
                     if ( rsInventorysSize <= limit) {
                         fromIndex = 0;
                         toIndex = rsInventorysSize;
                     } else {
                         // 随机抽取 limit 条房源数据返回
-                        fromIndex = IntegerUtil.generateRandom(0 , rsInventorysSize - limit );
+                        fromIndex = IntegerUtil.generateRandom(0 , rsInventorysSize - limit + 1) ;
                         toIndex = fromIndex + limit ;
                     }
+
+                    //System.out.println(rsInventorysSize);
+                    //System.out.println("fromIndex: " + fromIndex + ", toIndex: " + toIndex);
 
                     // 截取一段范围的房源数据
                     List<Map<String, String>>  rangeInventorys = rsInventorys.subList(fromIndex, toIndex);
