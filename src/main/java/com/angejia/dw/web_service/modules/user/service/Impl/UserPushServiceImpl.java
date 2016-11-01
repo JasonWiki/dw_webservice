@@ -30,15 +30,23 @@ public class UserPushServiceImpl implements UserPushService {
      */
     public Map<String, String> getUserInfoByUserId(String userId, String cityId, Integer limit) {
 
-        Map<String, String> result = new HashMap<String, String>();
+        // 待 push 队列
+        List<Map<String, String>> pushQueue = new ArrayList<Map<String, String>>();
+        
+        // push 队列长度
+        Integer pushQueueLength = 3;
 
         // 获取客户画像
         List<Map<String, String>> userPortraitList = userPortraitService.getUserPortraitResult(userId, cityId);
 
+       
         if ( !userPortraitList.isEmpty() ) {
             // 遍历画像
             for (int i = 0; i <= userPortraitList.size() - 1; i ++) {
 
+                if (pushQueue.size() >= pushQueueLength) {
+                    break;
+                }
                 //if (i > 5) break;
 
                 // 当前画像
@@ -52,9 +60,9 @@ public class UserPushServiceImpl implements UserPushService {
                 // 当前画像搜索到的房源条数
                 Integer rsInventorysSize = rsInventorys.size();
                 // 候选房源最大选取条数
-                Integer maxRsInventorysNum = limit * 2;
+                Integer maxRsInventorysNum = 0 ;
  
-                if (rsInventorysSize >= maxRsInventorysNum ) {
+                if (rsInventorysSize > maxRsInventorysNum ) {
 
                     Integer fromIndex = 0;
                     Integer toIndex = limit;
@@ -75,8 +83,11 @@ public class UserPushServiceImpl implements UserPushService {
                     List<Map<String, String>>  rangeInventorys = rsInventorys.subList(fromIndex, toIndex);
                     //List<Map<String, String>>  rangeInventorys = rsInventorys;
 
+                    // 单个 Push 信息
+                    Map<String, String> userPushInfo = new HashMap<String, String>();
+
                     // 加载当前客户画像
-                    result.putAll(userPortrait);
+                    userPushInfo.putAll(userPortrait);
 
                     List inventoryIds = new ArrayList<String>();
                     for( Map<String, String> curMap : rangeInventorys){
@@ -84,14 +95,26 @@ public class UserPushServiceImpl implements UserPushService {
                         inventoryIds.add(inventoryId);
                     }
 
-                    result.put("inventorys", StringUtils.join(inventoryIds,",") );
-                    result.put("userPortraitSortPoint", userPortraitSortPoint);
-                    break;
+                    userPushInfo.put("inventorys", StringUtils.join(inventoryIds,",") );
+                    userPushInfo.put("userPortraitSortPoint", userPortraitSortPoint);
+
+                    pushQueue.add(userPushInfo);
+                    //break;
                 } 
             }
 
         }
 
+
+        // 最终推荐结果
+        Map<String, String> result = new HashMap<String, String>();
+
+        // 队列随机推荐
+        Integer pushListSize = pushQueue.size();
+        if (pushListSize > 0) {
+            result = pushQueue.get(IntegerUtil.generateRandom(0 , pushListSize));
+        }
+ 
         return result;
     }
 
