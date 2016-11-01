@@ -34,7 +34,7 @@ public class UserPushServiceImpl implements UserPushService {
         List<Map<String, String>> pushQueue = new ArrayList<Map<String, String>>();
         
         // push 队列长度
-        Integer pushQueueLength = 5;
+        Integer pushQueueLength = 3;
 
         // 获取客户画像
         List<Map<String, String>> userPortraitList = userPortraitService.getUserPortraitResult(userId, cityId);
