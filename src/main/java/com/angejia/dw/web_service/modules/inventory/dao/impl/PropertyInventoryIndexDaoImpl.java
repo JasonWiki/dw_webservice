@@ -102,12 +102,12 @@ public class PropertyInventoryIndexDaoImpl extends BaseDaoHibernate4<PropertyInv
 
         // 价格范围查询
         if (entity.getPriceMin() != null && entity.getPriceMax() != null ) {
-            Restrictions.between("price", entity.getPriceMin(), entity.getPriceMax());
+            criteria.add( Restrictions.between("price", entity.getPriceMin(), entity.getPriceMax()) );
         // 价格从最小值查询
         } else if (entity.getPriceMin() != null) {
-            Restrictions.between("price", entity.getPriceMin(), 999999999);
+            criteria.add( Restrictions.between("price", entity.getPriceMin(), 999999999) );
         } else if (entity.getPriceMax() != null) {
-            Restrictions.between("price", 1, entity.getPriceMax());
+            criteria.add( Restrictions.between("price", 1, entity.getPriceMax()) );
         }
 
         // 排序
