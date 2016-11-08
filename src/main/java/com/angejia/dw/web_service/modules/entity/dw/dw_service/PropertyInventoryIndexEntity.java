@@ -79,7 +79,7 @@ public class PropertyInventoryIndexEntity implements java.io.Serializable {
     }
 
 
-    @Column()
+    @Column(name = "bedrooms")
     public Byte getBedrooms() {
         return bedrooms;
     }
@@ -88,7 +88,7 @@ public class PropertyInventoryIndexEntity implements java.io.Serializable {
     }
 
 
-    @Column()
+    @Column(name = "price")
     public Integer getPrice() {
         return price;
     }
@@ -133,7 +133,7 @@ public class PropertyInventoryIndexEntity implements java.io.Serializable {
     }
 
 
-    @Column()
+    @Column(name = "status")
     public Byte getStatus() {
         return status;
     }
