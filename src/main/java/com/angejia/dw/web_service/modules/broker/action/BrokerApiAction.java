@@ -48,12 +48,6 @@ public class BrokerApiAction extends BaseAction {
 
     private Map<String, Object> result = new HashMap<String, Object>();
 
-    // 测试
-    @Action(value="list", results={@Result(location="list.jsp")})
-    public String list() {
-        return SUCCESS;
-    }
-
     // 顾问智能配盘接口
     @Action("broker-user-mate-inventory")
     public String brokerUserMateInventory() {
@@ -67,7 +61,7 @@ public class BrokerApiAction extends BaseAction {
         // 顾问配盘数据
         List<Map<String, String>> brokerUserMateInventorys = brokerUserMateInventoryService.getBrokerUserMateInventory(brokerId, userId, cityId);
 
-        // 外层基本信息 
+        // 外层基本信息
         Map<String, Object> baseResult = new HashMap<String, Object>();
         baseResult.put("brokerId", this.getBrokerId());
         baseResult.put("userId", this.getUserId());
