@@ -29,7 +29,6 @@ public class PropertyInventoryIndexDaoImpl extends BaseDaoHibernate4<PropertyInv
     @Autowired
     private DataSourceSessionFactory dataSourceDao;
 
-    //
     public List<PropertyInventoryIndexEntity> getInventorysByEntity(PropertyInventoryIndexEntity entity, Integer offset,
             Integer limit) {
 
@@ -41,6 +40,9 @@ public class PropertyInventoryIndexDaoImpl extends BaseDaoHibernate4<PropertyInv
 
         // 处理筛选条件
 
+        // 首先筛选不是marketing的房源
+        criteria.add(Restrictions.eq("isMarketing", entity.getIsMarketing()));
+        
         // 在售状态
         if (entity.getStatus() != null) {
             criteria.add(Restrictions.eq("status", entity.getStatus()));
