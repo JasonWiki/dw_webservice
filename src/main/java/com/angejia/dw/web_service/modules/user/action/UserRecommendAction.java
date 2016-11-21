@@ -52,7 +52,6 @@ public class UserRecommendAction extends BaseAction {
     // 用户推荐房源接口, cbcf + ubcf
     @Action(value="user-recommend-inventorys", results={ @Result(type="json",params={"root", "userRecommendInventorys" }) })
     public String userRecommendInventorys() {
-
         // 拆解 用户 id
         String userId = this.getUserId();
         String cityId = this.getCityId();
@@ -64,11 +63,7 @@ public class UserRecommendAction extends BaseAction {
             // CBCF 推荐房源
             List<Map<String, String>> userCBCFRecommendInventorys = userRecommendService.getUserCBCFRecommendInventorys(userId, cityId, 100);
 
-            // UBCF 推荐房源
-            List<Map<String, String>> userUBCFRecommendInventorys =  userRecommendService.getUserUBCFRecommendInventorys(userId, cityId, 0 , 40);
-
             // 组合到推荐房源数据中
-
             for (int i=0; i <= userCBCFRecommendInventorys.size() -1 ; i++) {
                 Map<String, String> userCBCF =  userCBCFRecommendInventorys.get(i);
 
@@ -79,18 +74,6 @@ public class UserRecommendAction extends BaseAction {
                 recMap.put("type", "1");
                 recommendInventorys.add(recMap);
             }
-
-            for (int i=0; i <= userUBCFRecommendInventorys.size() -1 ; i++) {
-                Map<String, String> userUBCF =  userUBCFRecommendInventorys.get(i);
-
-                Map<String, String> recMap = new HashMap<String, String>();
-                recMap.put("inventory_rs_id", userUBCF.get("inventory_id"));
-                //recMap.put("inventory_rs_pf", upri.get("relation_user_pf"));
-                //recMap.put("inventory_rs_sort", upri.get("inventory_rs_status"));
-                recMap.put("type", "2");
-                recommendInventorys.add(recMap);
-            }
-
         }
 
         // 房源去重

@@ -39,7 +39,6 @@ public class UserRecommendServiceImpl implements UserRecommendService {
      * @return
      */
     public List<Map<String, String>> getUserCBCFRecommendInventorys( String userId, String cityId, Integer limit) {
-
         // 最终结果
         List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 
@@ -50,12 +49,10 @@ public class UserRecommendServiceImpl implements UserRecommendService {
         List<Map<String, String>> userPortrait = userPortraitService.getUserPortraitResult(userId.toString(), cityId.toString());
         //System.out.println("用户画像:  数量: " + userPortrait.size() + " - " +  userPortrait);
 
-        for (int i =0; i <= userPortrait.size()-1; i ++) {
+        for (int i =0; i < userPortrait.size(); i ++) {
 
-            if (
-             rsResult.size() >= limit
-             || i >= 5
-             ) break;
+            if (rsResult.size() >= limit || i >= 5)
+                break;
 
             // 客户画像
             Map<String, String> userPortraitInfo = userPortrait.get(i);
@@ -87,6 +84,7 @@ public class UserRecommendServiceImpl implements UserRecommendService {
     public List<Map<String, String>> getRecommendInventorysByTags(Map<String, String> searchTags, String searchFrom, Integer offset, Integer limit) {
         PropertyInventoryIndexEntity propertyInventoryIndexEntity = new PropertyInventoryIndexEntity();
 
+        propertyInventoryIndexEntity.setIsMarketing(Byte.parseByte("0"));
         // 城市 Id
         if (searchTags.get(UserTagsEntity.CITY_TAG_CODE) != null) {
             //System.out.println(UserTagsEntity.CITY_TAG_CODE + " : " + userPortraitInfo.get(UserTagsEntity.CITY_TAG_CODE));
@@ -133,14 +131,4 @@ public class UserRecommendServiceImpl implements UserRecommendService {
         // 搜索房源数据
         return inventoryService.searchInventoryByEntity(propertyInventoryIndexEntity, offset, limit);
     }
-
-
-    /**
-     * 获取 UBCF 推荐的房源数据
-     */
-    public List<Map<String, String>> getUserUBCFRecommendInventorys(String userId, String cityId, Integer offset, Integer limit) {
-
-        return userUBCFDao.getUserCBCFRecommendInventorys(userId, cityId, offset, limit);
-    }
-
 }
