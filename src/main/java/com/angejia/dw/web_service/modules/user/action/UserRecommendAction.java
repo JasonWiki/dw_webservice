@@ -55,9 +55,8 @@ public class UserRecommendAction extends BaseAction {
         String cityId = this.getCityId();
 
         // 保存推荐数据
-        List<Map<String, String>> recommendInventorys = new ArrayList<Map<String, String>>();
-        final List<Map<String, String>> recommendMarketingInventories = new ArrayList<Map<String, String>>();
-        final List<Map<String, String>> recommendInventories = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> recommendInventories = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> recommendMarketingInventories = new ArrayList<Map<String, String>>();
 
         if (userId != null && cityId != null) {
             // CBCF 推荐房源
@@ -71,13 +70,8 @@ public class UserRecommendAction extends BaseAction {
 
                 Map<String, String> recMap = new HashMap<String, String>();
                 recMap.put("inventory_rs_id", userCBCF.get("inventory_id"));
-                recMap.put("type", "1");
-                recommendInventories.add(new HashMap<String, String>() {
-                    {
-                        put("inventoryId", inventoryId);
-                    }
-                });
-                recommendInventorys.add(recMap);
+                recMap.put("is_marketing", "0");
+                recommendInventories.add(recMap);
             }
 
             // CBCF 推荐营销房源
@@ -88,20 +82,22 @@ public class UserRecommendAction extends BaseAction {
             for (int i = 0; i < cbcfRecommendMarketingInventorys.size(); i++) {
                 Map<String, String> marketingInventory = cbcfRecommendMarketingInventorys.get(i);
                 Map<String, String> recMap = new HashMap<String, String>();
-                recMap.put("inventoryId", marketingInventory.get("inventory_id"));
+                recMap.put("inventory_rs_id", marketingInventory.get("inventory_id"));
+                recMap.put("is_marketing", "1");
                 recommendMarketingInventories.add(recMap);
             }
         }
 
         // 房源去重
         final List<Map<String, String>> result = new ArrayList<Map<String, String>>();
-        result.addAll(ListUtil.listMapValDistinct(recommendInventorys, "inventory_rs_id"));
+        result.addAll(ListUtil.listMapValDistinct(recommendInventories, "inventory_rs_id"));
+        result.addAll(ListUtil.listMapValDistinct(recommendMarketingInventories, "inventory_rs_id"));
 
         // 外层基本信息
         Map<String, Object> baseResult = new HashMap<String, Object>();
         baseResult.put("userId", userId);
         baseResult.put("cityId", cityId);
-        baseResult.put("total", Integer.toString(recommendInventorys.size()));
+        baseResult.put("total", Integer.toString(recommendInventories.size()));
         baseResult.put("rec", new HashMap<String, Object>() {
             {
                 put("list", result);
@@ -109,21 +105,6 @@ public class UserRecommendAction extends BaseAction {
         });
 
         userRecommendInventorys.put("userInventoryInfo", baseResult);
-
-        userRecommendInventorys.put("userId", userId);
-        userRecommendInventorys.put("cityId", cityId);
-        userRecommendInventorys.put("recommendInventories", new HashMap<String, Object>() {
-            {
-                put("total", recommendInventories.size());
-                put("inventoryList", recommendInventories);
-            }
-        });
-        userRecommendInventorys.put("recommendMarketingInventories", new HashMap<String, Object>() {
-            {
-                put("total", recommendMarketingInventories.size());
-                put("inventoryList", recommendMarketingInventories);
-            }
-        });
         return SUCCESS;
     }
 
