@@ -47,7 +47,7 @@ public class UserRecommendAction extends BaseAction {
     private Map<String, Object> userRecommendInventorys = new HashMap<String, Object>();
 
     // 用户推荐房源接口, cbcf
-    @Action(value = "user-recommend-inventorys", results = {
+    @Action(value = "user-recommend-inventories", results = {
             @Result(type = "json", params = { "root", "userRecommendInventorys" }) })
     public String userRecommendInventorys() {
         // 拆解 用户 id
