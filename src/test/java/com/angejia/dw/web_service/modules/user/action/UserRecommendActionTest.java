@@ -1,22 +1,24 @@
 package com.angejia.dw.web_service.modules.user.action;
 
-import static org.junit.Assert.assertEquals;
-
+import org.apache.struts2.StrutsSpringTestCase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.mock.web.MockHttpServletRequest;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/ApplicationContext.xml" })
-public class UserRecommendActionTest {
+import com.opensymphony.xwork2.ActionProxy;
+
+public class UserRecommendActionTest extends StrutsSpringTestCase {
+    @Override
+    protected String[] getContextLocations() {
+        return new String[] { "classpath:spring/applicationContext.xml" };
+    }
+
     @Test
-    @Transactional
-    @Rollback(true)
-    public void evaluatesExpression() {
-        int sum = 6;
-        assertEquals(6, sum);
+    public void testExecute() throws Exception {
+        request = new MockHttpServletRequest();
+        ActionProxy proxy = getActionProxy("/user/recommend/user-recommend-inventories");
+        UserRecommendAction test = (UserRecommendAction) proxy.getAction();
+        assertNotNull(test);
+        String result = proxy.execute();
+        assertEquals("success", result);
     }
 }
