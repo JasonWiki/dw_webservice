@@ -6,7 +6,7 @@
   <packaging>war</packaging>
   <version>1.0</version>
   <name>web_service</name>
-  <url>http://maven.apache.org</url>
+  <url>https://git.corp.angejia.com/dw/dw_webservice</url>
 
 
   <!-- 增加额外的源 -->
