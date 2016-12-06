@@ -30,6 +30,7 @@ public class PropertyInventoryIndexEntity implements java.io.Serializable {
     private Byte status;
     private Byte surveyStatus;
     private Byte isMarketing;
+    private Integer providerId;
 
     @Id
     @Column(name = "inventory_id")
@@ -138,6 +139,15 @@ public class PropertyInventoryIndexEntity implements java.io.Serializable {
 
     public void setIsMarketing(Byte isMarketing) {
         this.isMarketing = isMarketing;
+    }
+
+    @Column(name = "provider_id")
+    public Integer getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(Integer providerId) {
+        this.providerId = providerId;
     }
 
     @Column(name = "status")

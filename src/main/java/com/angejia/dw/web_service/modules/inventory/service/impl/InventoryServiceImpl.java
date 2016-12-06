@@ -41,7 +41,7 @@ public class InventoryServiceImpl implements InventoryService{
             inventoryInfo.put("price", t.getPrice().toString());
             inventoryInfo.put("price_tier", t.getPriceTier().toString());
             inventoryInfo.put("inventory_type", t.getInventoryType().toString());
-            
+
             if (entity.getSearchFrom() != null) inventoryInfo.put("search_from", entity.getSearchFrom().toString());
             result.add(inventoryInfo);
 
