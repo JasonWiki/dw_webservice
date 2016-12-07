@@ -43,6 +43,11 @@ public class PropertyInventoryIndexDaoImpl extends BaseDaoHibernate4<PropertyInv
         // 是否营销房源
         criteria.add(Restrictions.eq("isMarketing", entity.getIsMarketing()));
 
+        // 公司Id
+        if (entity.getProviderId() != null) {
+            criteria.add(Restrictions.eq("providerId", entity.getProviderId()));
+        }
+
         // 在售状态
         if (entity.getStatus() != null) {
             criteria.add(Restrictions.eq("status", entity.getStatus()));
