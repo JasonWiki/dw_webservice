@@ -127,7 +127,7 @@
       </exclusions>
     </dependency>
 
-    <!-- struts2 与 spring 整合插件 把 Action 交给 Spring 容器来管理, 调用 Spring 容器中的 Action, 
+    <!-- struts2 与 spring 整合插件 把 Action 交给 Spring 容器来管理, 调用 Spring 容器中的 Action,
       struts2 不再负责创建 Action 实例, 直接通过 Spring 容器获取 Action 对象 -->
     <dependency>
       <groupId>org.apache.struts</groupId>
@@ -208,7 +208,7 @@
 
 
 
-    <!-- 注意, 如果出现了 Could not initialize class org.apache.hadoop.hbase.protobuf.ProtobufUtil 
+    <!-- 注意, 如果出现了 Could not initialize class org.apache.hadoop.hbase.protobuf.ProtobufUtil
       错误是由于 Hadoop 的包与 HBase 不兼容 -->
     <!-- hbase-common -->
     <dependency>
