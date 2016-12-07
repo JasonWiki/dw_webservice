@@ -60,7 +60,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
         List<Map<String, String>> rsResult = new ArrayList<Map<String, String>>();
 
         // 顾问所在公司
-        Broker broker = brokerService.getBrokerByUserId(userId);
+        Broker broker = brokerService.getBrokerByUserId(brokerId);
 
         // 客户需求推荐房源
         DemandEntity demand = this.getDemand(brokerId, userId, cityId);
