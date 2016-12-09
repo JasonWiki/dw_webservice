@@ -7,6 +7,9 @@ public interface UserRecommendService {
 
     public List<Map<String, String>> getUserCBCFRecommendInventorys(String userId, String cityId, Integer limit);
 
+    public List<Map<String, String>> getCBCFRecommendInventories(String userId, String cityId, Integer companyId,
+            Integer limit);
+
     public List<Map<String, String>> getUserCBCFRecommendMarketingInventorys(String userId, String cityId,
             Integer limit);
 

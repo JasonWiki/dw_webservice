@@ -6,45 +6,62 @@
   <packaging>war</packaging>
   <version>1.0</version>
   <name>web_service</name>
-  <url>http://maven.apache.org</url>
+  <url>https://git.corp.angejia.com/dw/dw_webservice</url>
 
 
   <!-- 增加额外的源 -->
   <repositories>
 
     <repository>
-        <id>Maven Repository</id>
-        <url>http://repo.maven.apache.org/maven2</url>
-    </repository> 
+      <id>Maven Repository</id>
+      <url>http://repo.maven.apache.org/maven2</url>
+    </repository>
 
     <repository>
-        <id>Apache Repository</id>
-        <url>https://repository.apache.org/content/repositories/releases</url>
-    </repository> 
+      <id>Apache Repository</id>
+      <url>https://repository.apache.org/content/repositories/releases</url>
+    </repository>
 
     <repository>
-        <id>JBoss Repository</id>
-        <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
-    </repository> 
+      <id>JBoss Repository</id>
+      <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+    </repository>
 
     <repository>
-        <id>Cloudera Repository</id>
-        <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-    </repository> 
+      <id>Cloudera Repository</id>
+      <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+    </repository>
 
   </repositories>
+
+  <properties>
+    <spring.version>4.0.4.RELEASE</spring.version>
+    <struts2.version>2.3.16.3</struts2.version>
+  </properties>
 
 
   <!-- 依赖管理 -->
   <dependencies>
-  
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.4</version>
+      <version>4.11</version>
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
 
     <!-- apache log4j -->
     <dependency>
@@ -64,35 +81,35 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
-      <version>4.0.4.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
     <!-- spring-web -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-      <version>4.0.4.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
     <!-- spring-jdbc -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>4.0.4.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
     <!-- spring-orm -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
-      <version>4.0.4.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
     <!-- spring-aspects -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aspects</artifactId>
-      <version>4.0.4.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
 
@@ -100,40 +117,45 @@
     <dependency>
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-core</artifactId>
-      <version>2.3.16.3</version>
+      <version>${struts2.version}</version>
       <!-- 这里排除掉队javassist的依赖，通过hibernate包引入 -->
       <exclusions>
-        <exclusion> 
-            <groupId>javassist</groupId>
-            <artifactId>javassist</artifactId>
+        <exclusion>
+          <groupId>javassist</groupId>
+          <artifactId>javassist</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
 
-    <!--  struts2 与 spring 整合插件
-     把 Action 交给 Spring 容器来管理, 调用 Spring 容器中的 Action,
-     struts2 不再负责创建 Action 实例, 直接通过 Spring 容器获取 Action 对象
-     -->
+    <!-- struts2 与 spring 整合插件 把 Action 交给 Spring 容器来管理, 调用 Spring 容器中的 Action,
+      struts2 不再负责创建 Action 实例, 直接通过 Spring 容器获取 Action 对象 -->
     <dependency>
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-spring-plugin</artifactId>
-      <version>2.3.16.3</version>
+      <version>${struts2.version}</version>
     </dependency>
 
     <!-- struts 注解插件 -->
-    <dependency> 
+    <dependency>
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-convention-plugin</artifactId>
-      <version>2.3.16.3</version>
+      <version>${struts2.version}</version>
     </dependency>
 
     <!-- struts json 插件 -->
     <dependency>
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-json-plugin</artifactId>
-      <version>2.3.16.3</version>
+      <version>${struts2.version}</version>
     </dependency>
- 
+
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-junit-plugin</artifactId>
+      <version>${struts2.version}</version>
+      <scope>test</scope>
+    </dependency>
+
     <!-- hibernate-core -->
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -175,7 +197,7 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.30</version>
-    </dependency> 
+    </dependency>
 
     <!-- C3P0 是一个开源的 JDBC 连接池，它实现了数据源和 JNDI 绑定，支持 JDBC3 规范和 JDBC2 的标准扩展。 -->
     <dependency>
@@ -186,14 +208,19 @@
 
 
 
-    <!--  
-        注意, 如果出现了 Could not initialize class org.apache.hadoop.hbase.protobuf.ProtobufUtil 错误是由于 Hadoop 的包与 HBase 不兼容
-   -->
+    <!-- 注意, 如果出现了 Could not initialize class org.apache.hadoop.hbase.protobuf.ProtobufUtil
+      错误是由于 Hadoop 的包与 HBase 不兼容 -->
     <!-- hbase-common -->
     <dependency>
       <groupId>org.apache.hbase</groupId>
       <artifactId>hbase-common</artifactId>
       <version>1.0.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- hbase-client -->
@@ -203,27 +230,20 @@
       <version>1.0.0</version>
     </dependency>
 
-    <!-- hbase-server -->
-    <dependency>
-      <groupId>org.apache.hbase</groupId>
-      <artifactId>hbase-server</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-    
     <!-- hbase-protocol -->
     <dependency>
       <groupId>org.apache.hbase</groupId>
       <artifactId>hbase-protocol</artifactId>
       <version>1.0.0</version>
     </dependency>
-    
+
     <!-- htrace-core< -->
     <dependency>
       <groupId>org.apache.htrace</groupId>
       <artifactId>htrace-core</artifactId>
       <version>3.1.0-incubating</version>
     </dependency>
- 
+
 
     <!-- json-simple -->
     <dependency>
@@ -232,26 +252,33 @@
       <version>1.1.1</version>
     </dependency>
 
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
 
 
   <build>
 
-    <!--产生的构件的文件名，默认值是${artifactId}-${version}。-->
+    <!--产生的构件的文件名，默认值是${artifactId}-${version}。 -->
     <finalName>dw_webservice</finalName>
- 
+
     <!-- 插件 -->
     <plugins>
 
       <!-- 打包插件 -->
       <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.3.2</version>
-          <configuration>
-              <source>1.7</source>
-              <target>1.7</target>
-          </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
       </plugin>
 
       <!-- assembly 打包插件 -->
@@ -259,19 +286,13 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <version>2.6</version>
         <configuration>
-          
+
           <!-- 打包依赖后的 jar 后缀名 -->
           <descriptorRefs>
-            
+
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
-          
-          <!--描述文件路径
-          <descriptors> 
-            <descriptor>src/assembly/assembly.xml</descriptor>
-          </descriptors>
-          -->
-          
+
         </configuration>
         <executions>
           <execution>
@@ -287,5 +308,4 @@
     </plugins>
 
   </build>
-
 </project>

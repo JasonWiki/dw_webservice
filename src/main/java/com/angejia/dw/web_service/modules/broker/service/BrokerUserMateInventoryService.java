@@ -6,5 +6,5 @@ import java.util.Map;
 public interface BrokerUserMateInventoryService {
 
     // 获取推荐房源数据
-    public List<Map<String, String>> getBrokerUserMateInventory(Long brokerId, Long userId, Long cityId);
+    public List<Map<String, String>> getBrokerUserMateInventories(Long brokerId, Long userId, Long cityId);
 }
