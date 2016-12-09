@@ -175,7 +175,7 @@ public class BrokerUserMateInventoryServiceImpl implements BrokerUserMateInvento
 
         String[] bedroomsIdsArr = bedroomsIds.split(";");
 
-        for (int i = 0; i <= bedroomsIdsArr.length - 1; i++) {
+        for (int i = 0; i < bedroomsIdsArr.length; i++) {
             String sp = "";
             if (i < bedroomsIdsArr.length - 1) {
                 sp = ";";
